@@ -3,7 +3,7 @@
 import csv
 
 from goodreads_exporter.models.book import Book
-from goodreads_exporter.normalize.books import normalize_rating
+from goodreads_exporter.normalize.books import normalize_rating, normalize_author_name
 
 
 def parse_goodreads_csv(file_obj) -> list[Book]:
@@ -15,7 +15,7 @@ def parse_goodreads_csv(file_obj) -> list[Book]:
         books.append(
             Book(
                 title=row["Title"],
-                author=row["Author"],
+                author=normalize_author_name(row["Author"]),
                 rating=normalize_rating(row["My Rating"]),
                 book_id=row["Book Id"]
             )

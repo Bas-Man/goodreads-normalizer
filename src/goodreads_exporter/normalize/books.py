@@ -13,3 +13,9 @@ def normalize_rating(value: str | None) -> int:
         return int(value)
     except ValueError:
         return 0
+
+def normalize_author_name(value: str | None) -> str:
+    if value is None:
+        return ""
+
+    return " ".join(value.split())
