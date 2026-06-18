@@ -5,3 +5,5 @@ def test_author_whitespace_normalized():
     assert normalize_author_name("") == ""
     assert normalize_author_name(None) == ""
     assert normalize_author_name("Sean Oswald") == "Sean Oswald"
+    assert normalize_author_name("D. B.  King") == "D. B. King"
+    assert normalize_author_name("C. R. Daems") == "C. R. Daems"
