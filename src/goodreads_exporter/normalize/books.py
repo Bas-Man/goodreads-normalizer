@@ -19,3 +19,6 @@ def normalize_author_name(value: str | None) -> str:
         return ""
 
     return " ".join(value.split())
+
+def normalize_book_title(value: str | None) -> str:
+    pass
