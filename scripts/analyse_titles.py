@@ -15,6 +15,7 @@ def main() -> None:
     titles_with_parens = []
     titles_with_hash = []
     titles_with_book = []
+    title_only = []
     titles_with_volume = []
 
     with csv_path.open(newline="", encoding="utf-8") as file:
@@ -22,6 +23,7 @@ def main() -> None:
 
         for row in reader:
             title = row["Title"].strip()
+            print(f"{title}")
 
             if ":" in title:
                 titles_with_colon.append(title)
@@ -42,6 +44,10 @@ def main() -> None:
             if re.search(r"\bVolume\b|\bVol\.\b", title, re.IGNORECASE):
                 titles_with_volume.append(title)
                 pattern_counts["contains_volume"] += 1
+
+            if re.search(r"^(?!.*[:#()]).*$", title, re.IGNORECASE):
+                title_only.append(title)
+                pattern_counts["title_only"] += 1
 
     print("\n=== Pattern Counts ===")
     for name, count in pattern_counts.most_common():
@@ -67,6 +73,11 @@ def main() -> None:
     for title in sorted(set(titles_with_volume)):
         print(title)
 
+    print("\n=== Titles Only ===")
+    for title in sorted(set(title_only)):
+        print(title)
+
 
 if __name__ == "__main__":
     main()
+
