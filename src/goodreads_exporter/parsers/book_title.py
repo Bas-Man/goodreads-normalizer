@@ -1,8 +1,8 @@
-from goodreads_exporter.models.book import BookTitle, Series
+from goodreads_exporter.models.book import BookTitleData, Series
 from goodreads_exporter.parsers import regex_patterns
 
 
-def parse_title(title: str) -> BookTitle:
+def parse_title(title: str) -> BookTitleData:
     clean_title = (
         title
         .strip()
@@ -27,9 +27,9 @@ def parse_title(title: str) -> BookTitle:
             title = groups.get("Title").strip()
             if groups.get("SN1"):
                 series_list = _get_series(groups)
-            return BookTitle(title=title, series=series_list)
+            return BookTitleData(title=title, series=series_list)
     # Fallback if no patterns matched
-    return BookTitle(title="Unknown", series=[])
+    return BookTitleData(title="Unknown", series=[])
 
 
 def _get_series(groups: dict[str, str]) -> list[Series]:

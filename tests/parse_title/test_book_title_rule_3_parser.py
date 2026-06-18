@@ -1,4 +1,4 @@
-from goodreads_exporter.models.book import BookTitle, Series
+from goodreads_exporter.models.book import BookTitleData, Series
 from goodreads_exporter.parsers.book_title import parse_title
 
 import pytest
@@ -34,6 +34,6 @@ TEST_TITLES = [
 
 @pytest.mark.parametrize("input_title, expected_title, expected_series", TEST_TITLES)
 def test_parse_titles_only(input_title: str, expected_title: str, expected_series: list):
-        this_book: BookTitle = parse_title(input_title)
+        this_book: BookTitleData = parse_title(input_title)
         assert this_book.title == expected_title
         assert this_book.series == expected_series

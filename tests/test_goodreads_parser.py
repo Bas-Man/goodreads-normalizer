@@ -16,7 +16,9 @@ def test_parse_books():
 
     assert len(books) == 2
 
-    assert books[0].title == "Crystal Core 3: Crystal Core, Book 3"
+    assert books[0].title == "Crystal Core 3"
+    assert books[0].series[0].name == "Crystal Core"
+    assert books[0].series[0].numbers == ["3"]
     assert books[0].author == "David Burke"
     assert books[0].rating == 0
     assert books[0].book_id == "226152904"
