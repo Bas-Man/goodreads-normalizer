@@ -1,5 +1,6 @@
 # src/goodreads_exporter/normalize/books.py
-
+from goodreads_exporter.models.book import BookTitle
+from goodreads_exporter.parsers.book_title import parse_title
 def normalize_rating(value: str | None) -> int:
     if value is None:
         return 0
@@ -20,5 +21,5 @@ def normalize_author_name(value: str | None) -> str:
 
     return " ".join(value.split())
 
-def normalize_book_title(value: str | None) -> str:
-    pass
+def normalize_book_title(value: str) -> BookTitle:
+    return parse_title(value)
