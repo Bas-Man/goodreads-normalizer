@@ -1,5 +1,5 @@
-from goodreads_exporter.models.book import BookTitleData, Series
-from goodreads_exporter.parsers import regex_patterns
+from goodreads_normalizer.models.book import BookTitleData, Series
+from goodreads_normalizer.parsers import regex_patterns
 
 
 def parse_title(title: str) -> BookTitleData:

@@ -1,6 +1,6 @@
-# src/goodreads_exporter/normalize/books.py
-from goodreads_exporter.models.book import BookTitleData
-from goodreads_exporter.parsers.book_title import parse_title
+# src/goodreads_normalizer/normalize/books.py
+from goodreads_normalizer.models.book import BookTitleData
+from goodreads_normalizer.parsers.book_title import parse_title
 
 
 def normalize_rating(value: str | None) -> int:

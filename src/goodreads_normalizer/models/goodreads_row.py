@@ -1,4 +1,4 @@
-# src/goodreads_exporter/models/goodreads_row.py
+# src/goodreads_normalizer/models/goodreads_row.py
 
 from pydantic import BaseModel
 

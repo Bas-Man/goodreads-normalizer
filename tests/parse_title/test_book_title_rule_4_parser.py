@@ -1,5 +1,5 @@
-from goodreads_exporter.models.book import BookTitleData, Series
-from goodreads_exporter.parsers.book_title import parse_title
+from goodreads_normalizer.models.book import BookTitleData, Series
+from goodreads_normalizer.parsers.book_title import parse_title
 
 import pytest
 

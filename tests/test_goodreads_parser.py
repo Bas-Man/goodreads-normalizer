@@ -2,7 +2,7 @@
 
 from io import StringIO
 
-from goodreads_exporter.parsers.goodreads_csv import parse_goodreads_csv
+from goodreads_normalizer.parsers.goodreads_csv import parse_goodreads_csv
 
 
 CSV_DATA = """Book Id,Title,Author,Author l-f,Additional Authors,ISBN,ISBN13,My Rating,Publisher

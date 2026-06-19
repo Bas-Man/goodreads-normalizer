@@ -1,6 +1,6 @@
 # tests/test_normalize_rating.py
 
-from goodreads_exporter.normalize.books import normalize_rating
+from goodreads_normalizer.normalize.books import normalize_rating
 
 
 def test_rating_preserved():

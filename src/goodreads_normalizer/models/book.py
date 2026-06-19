@@ -1,4 +1,4 @@
-# src/goodreads_exporter/models/book.py
+# src/goodreads_normalizer/models/book.py
 from pydantic import BaseModel, Field
 
 

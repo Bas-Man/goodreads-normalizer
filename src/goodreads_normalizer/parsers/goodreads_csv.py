@@ -1,9 +1,9 @@
-# src/goodreads_exporter/parsers/goodreads_csv.py
+# src/goodreads_normalizer/parsers/goodreads_csv.py
 
 import csv
 
-from goodreads_exporter.models.book import Book
-from goodreads_exporter.normalize.books import (
+from goodreads_normalizer.models.book import Book
+from goodreads_normalizer.normalize.books import (
     normalize_rating,
     normalize_author_name,
     normalize_book_title,
