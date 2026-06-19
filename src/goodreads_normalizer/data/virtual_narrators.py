@@ -1,3 +1,19 @@
+# High-quality Microsoft Edge English neural narrators
+edge_tts_narrators = {
+    "en-US-GuyNeural",
+    "en-US-AriaNeural",
+    "en-US-JennyNeural",
+    "en-US-ChristopherNeural",
+    "en-GB-RyanNeural",
+    "en-GB-SoniaNeural",
+    "en-AU-NatashaNeural",
+    "en-AU-WilliamNeural",
+    "en-CA-ClaraNeural",
+    "en-CA-LiamNeural",
+    "en-IN-NeerjaNeural",
+    "en-IN-PrabhatNeural"
+}
+
 # Standard, WaveNet, and Neural2 English voice codes for programmatic narration
 google_tts_narrators = {
     "en-US-Neural2-A", "en-US-Neural2-C", "en-US-Neural2-D", "en-US-Neural2-F",
