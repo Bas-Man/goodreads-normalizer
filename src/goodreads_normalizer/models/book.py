@@ -22,10 +22,12 @@ class Book(BaseModel):
 
     def is_series_collection(self) -> bool:
         """Belongs to 1 series, but spans multiple book numbers."""
+
         return len(self.series) == 1 and len(self.series[0].numbers) > 1
 
     def is_single_book(self) -> bool:
         """Belongs to 1 series, and is just a single entry."""
+
         return len(self.series) == 1 and len(self.series[0].numbers) == 1
 
     def is_a_stand_alone_book(self) -> bool:
