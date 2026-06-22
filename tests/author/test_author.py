@@ -1,7 +1,4 @@
-from pydantic import ValidationError
 from goodreads_normalizer.models.author import Author
-
-
 import pytest
 
 TEST_VALID_AUTHORS = [
@@ -9,8 +6,6 @@ TEST_VALID_AUTHORS = [
     ("Dakota Krout", "Dakota Krout", "Dakota", "Krout", "krout-dakota"),
     ("Bob  Smith", "Bob Smith", "Bob", "Smith", "smith-bob"),
 ]
-
-
 
 @pytest.mark.parametrize("input_author, expected_author, expect_first, expected_last, slug", TEST_VALID_AUTHORS)
 def test_valid_authors(input_author: str, expected_author: str, expect_first: str, expected_last: str, slug: str):

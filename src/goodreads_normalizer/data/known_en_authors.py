@@ -122,3 +122,8 @@ KNOWN_AUTHORS = {
     "Damian Lynch",
     "William DeMeritt",
 }
+
+PEN_NAME_TO_NAME = {
+    "Shirtaloon": "Travis Deverell",
+    "Always RollsAOne": "Erick Thiemke",
+}
