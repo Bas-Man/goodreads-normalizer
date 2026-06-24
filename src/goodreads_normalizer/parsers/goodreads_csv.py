@@ -21,7 +21,7 @@ def parse_goodreads_csv(file_obj) -> list[Book]:
                 title_data=normalize_book_title(row["Title"]),
                 author=normalize_author_name(row["Author"]),
                 rating=normalize_rating(row["My Rating"]),
-                book_id=row["Book Id"]
+                book_id=row["Book Id"],
             )
         )
 
