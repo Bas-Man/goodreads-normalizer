@@ -19,4 +19,5 @@ repos:
     rev: v1.14.0
     hooks:
       - id: mypy # Validates static type hints
+        args: [--python-executable=.venv/bin/python]
         additional_dependencies: [types-requests] # Add types for your external libs if needed
