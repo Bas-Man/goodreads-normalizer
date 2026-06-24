@@ -28,7 +28,7 @@ class Author(BaseModel):
                 data["pen_name"] = clean_name
                 data["name"] = PEN_NAME_TO_NAME[clean_name]
             else:
-                data["name"] = clean_name  # ← keep in sync
+                data["name"] = clean_name
                 data["pen_name"] = None
 
         return data
