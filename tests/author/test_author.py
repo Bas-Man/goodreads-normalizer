@@ -14,6 +14,7 @@ TEST_VALID_AUTHORS = [
         "Always RollsAOne",
         "rollsaone-always",
     ),
+    ("Homer", "Homer", "", "Homer", None, "homer"),
 ]
 
 
@@ -37,13 +38,25 @@ def test_valid_authors(
 
 
 TEST_THREE_PARTS_NAME = [
-    ("James A. Hunter", "James A. Hunter", "James A."),
-    ("L.E. Modesitt Jr.", "L.E. Modesitt Jr.", "L.E."),
+    ("James A. Hunter", "James A. Hunter", "James A.", "Hunter", "hunter-james-a"),
+    (
+        "L.E. Modesitt Jr.",
+        "L.E. Modesitt Jr.",
+        "L.E.",
+        "Modesitt Jr.",
+        "modesitt-jr-l-e",
+    ),
 ]
 
 
-@pytest.mark.parametrize("input_name, expected_name, first_name", TEST_THREE_PARTS_NAME)
-def test_three_parts_name(input_name: str, expected_name: str, first_name: str):
+@pytest.mark.parametrize(
+    "input_name, expected_name, first_name, last_name, slug", TEST_THREE_PARTS_NAME
+)
+def test_three_parts_name(
+    input_name: str, expected_name: str, first_name: str, last_name: str, slug: str
+):
     author: Author = Author(name=input_name)
     assert author.display_name == expected_name
     assert author.first_name == first_name
+    assert author.last_name == last_name
+    assert author.slug == slug
