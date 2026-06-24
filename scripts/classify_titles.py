@@ -79,7 +79,6 @@ TITLE_ONLY = re.compile(r"^(?!.*[:#()]).*$", flags=re.IGNORECASE | re.MULTILINE)
 
 
 def classify_title(title: str) -> str:
-
     #    if PATTERN_1.match(title):
     #    return "Pattern One"
 
@@ -122,9 +121,9 @@ def classify_title(title: str) -> str:
 def main() -> None:
     csv_path = Path("goodreads_library_export.csv")
 
-    counts = Counter()
-    unknown_titles = []
-    titles_only = []
+    counts: Counter[str] = Counter()
+    unknown_titles: list[str] = []
+    titles_only: list[str] = []
 
     with csv_path.open(newline="", encoding="utf-8") as file:
         reader = csv.DictReader(file)
