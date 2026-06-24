@@ -1,7 +1,8 @@
-from pydantic import BaseModel, computed_field, field_validator, Field, model_validator
+from pydantic import BaseModel, computed_field, model_validator
 from goodreads_normalizer.normalize.books import normalize_author_name
 from goodreads_normalizer.validation.author import validate_author_name
 from goodreads_normalizer.data.known_en_authors import PEN_NAME_TO_NAME
+
 
 class Author(BaseModel):
     name: str = ""
