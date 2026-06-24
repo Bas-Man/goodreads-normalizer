@@ -2,7 +2,6 @@
 from goodreads_normalizer.models.book import BookTitleData
 from goodreads_normalizer.parsers.book_title import parse_title
 
-
 def normalize_rating(value: str | None) -> int:
     if value is None:
         return 0
