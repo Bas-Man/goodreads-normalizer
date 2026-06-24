@@ -127,3 +127,5 @@ PEN_NAME_TO_NAME = {
     "Shirtaloon": "Travis Deverell",
     "Always RollsAOne": "Erick Thiemke",
 }
+
+FIX_STRANGE_NAMES = {"reichert-mickey-zucker": "Michey Zucker Reichert"}
