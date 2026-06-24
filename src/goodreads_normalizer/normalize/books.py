@@ -17,11 +17,13 @@ def normalize_rating(value: str | None) -> int:
     except ValueError:
         return 0
 
+
 def normalize_author_name(value: str | None) -> str:
     if value is None:
         return ""
 
-    return " ".join(value.split())
+    return " ".join(value.split()).strip()
+
 
 def normalize_book_title(value: str) -> BookTitleData:
     return parse_title(value)

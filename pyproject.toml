@@ -27,12 +27,20 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/goodreads_normalizer"]
+exclude = [
+  "*.typed",                 # Strips py.typed from the wheel file
+  "tests/",                  # Strips testing directories
+]
 
 [dependency-groups]
 dev = ["mypy>=2.1.0", "pytest>=9.0.3", "pytest-cov>=7.1.0", "ruff>=0.15.14"]
 
 [tool.ruff]
 line-length = 88
+
+[tool.mypy]
+disable_error_code = ["prop-decorator"]
+
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

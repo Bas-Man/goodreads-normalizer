@@ -2,6 +2,20 @@
 from pydantic import BaseModel, Field
 
 
+class Series(BaseModel):
+    name: str
+    numbers: list[str] = Field(default_factory=list)
+
+
+class BookTitleData(BaseModel):
+    title: str
+    # A book can belong to 0, 1, or many series
+    series: list[Series] = Field(default_factory=list)
+
+    def is_a_crossover(self) -> bool:
+        return len(self.series) > 0
+
+
 class Book(BaseModel):
     title_data: BookTitleData
     author: str
@@ -33,16 +47,3 @@ class Book(BaseModel):
     def is_a_stand_alone_book(self) -> bool:
         """Belongs to 0 series."""
         return len(self.series) == 0
-
-
-class Series(BaseModel):
-    name: str
-    numbers: list[str] = Field(default_factory=list)
-
-class BookTitleData(BaseModel):
-    title: str
-    # A book can belong to 0, 1, or many series
-    series: list[Series] = Field(default_factory=list)
-
-    def is_a_crossover(self) -> bool:
-        return len(self.series) > 0

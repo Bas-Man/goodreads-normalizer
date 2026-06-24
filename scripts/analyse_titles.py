@@ -9,7 +9,7 @@ from pathlib import Path
 def main() -> None:
     csv_path = Path("goodreads_library_export.csv")
 
-    pattern_counts = Counter()
+    pattern_counts: Counter[str] = Counter()
 
     titles_with_colon = []
     titles_with_parens = []
@@ -80,4 +80,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
