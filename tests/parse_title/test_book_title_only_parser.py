@@ -30,8 +30,9 @@ TEST_TITLES = [
     "Solo",
 ]
 
+
 @pytest.mark.parametrize("input_title", TEST_TITLES)
 def test_parse_titles_only(input_title: str):
-        this_title: BookTitleData = parse_title(input_title)
-        assert this_title.title == input_title
-        assert this_title.series == []
+    this_title: BookTitleData = parse_title(input_title)
+    assert this_title.title == input_title
+    assert this_title.series == []
