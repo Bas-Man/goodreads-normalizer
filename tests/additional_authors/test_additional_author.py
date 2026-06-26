@@ -2,18 +2,27 @@ from goodreads_normalizer.models.narrator import Narrator
 import pytest
 
 TEST_LIST = [
-    ("Travis Baltree", "Travis Baltree"),
+    ("Travis Baltree", "Travis Baltree", "Travis", "Baltree", "baltree-travis"),
 ]
 
-TEST_FAIL_LIST = [
-    "Exit - editor",
-]
+TEST_FAIL_LIST = ["Exit - editor", "exit - translator"]
 
 
-@pytest.mark.parametrize("input_name, expected_name", TEST_LIST)
-def test_narrator(input_name: str, expected_name: str):
+@pytest.mark.parametrize(
+    "input_name, expected_name, expected_first, expected_last, slug", TEST_LIST
+)
+def test_narrator(
+    input_name: str,
+    expected_name: str,
+    expected_first: str,
+    expected_last: str,
+    slug: str,
+):
     nar: Narrator = Narrator(name=input_name)
     assert nar.name == expected_name
+    assert nar.last_name == expected_last
+    assert nar.first_name == expected_first
+    assert nar.slug == slug
 
 
 @pytest.mark.parametrize("input_name", TEST_FAIL_LIST)
