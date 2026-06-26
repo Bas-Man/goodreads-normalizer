@@ -89,6 +89,15 @@ class Author(BaseModel):
 
     @computed_field
     @property
+    def last_first_name(self) -> str:
+        return (
+            f"{self._last_name}, {self._first_name}"
+            if self._first_name
+            else self._last_name
+        ).strip()
+
+    @computed_field
+    @property
     def slug(self) -> str:
         """
         Generates a slug string format: 'last-first' using active name.

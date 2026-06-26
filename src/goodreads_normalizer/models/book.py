@@ -1,5 +1,7 @@
 # src/goodreads_normalizer/models/book.py
 from pydantic import BaseModel, Field
+from goodreads_normalizer.models.author import Author
+from goodreads_normalizer.models.narrator import Narrator
 
 
 class Series(BaseModel):
@@ -18,7 +20,8 @@ class BookTitleData(BaseModel):
 
 class Book(BaseModel):
     title_data: BookTitleData
-    author: str
+    authors: list[Author] = Field(default_factory=list)
+    narrators: list[Narrator] = Field(default_factory=list)
     rating: int
     book_id: str
     isbn: str

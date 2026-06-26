@@ -19,7 +19,10 @@ def test_parse_books():
     assert books[0].title == "Crystal Core 3"
     assert books[0].series[0].name == "Crystal Core"
     assert books[0].series[0].numbers == ["3"]
-    assert books[0].author == "David Burke"
+    assert books[0].authors[0].name == "David Burke"
+    assert books[0].authors[0].last_first_name == "Burke, David"
+    assert books[0].authors[0].pen_name is None
+
     assert books[0].isbn == "1234567891"
     assert books[0].isbn13 == ""
     assert books[0].rating == 0
@@ -28,8 +31,9 @@ def test_parse_books():
     assert books[0].binding == "Audible Audio"
     assert books[0].year_published == "2025"
 
+    assert books[0].authors[0].name == "David Burke"
+    assert books[0].authors[0].last_first_name == "Burke, David"
     assert books[1].rating == 3
-    assert books[1].author == "David Burke"
     assert books[1].isbn == ""
     assert books[1].isbn13 == "1234567891234"
     assert books[1].book_id == "226146301"
