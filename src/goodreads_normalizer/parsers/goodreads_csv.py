@@ -20,12 +20,15 @@ def parse_goodreads_csv(file_obj) -> list[Book]:
         # Get Additional_Authors/Narrators
         books.append(
             Book(
+                book_id=row["Book Id"],
                 title_data=normalize_book_title(row["Title"]),
                 author=normalize_author_name(row["Author"]),
+                isbn=row["ISBN"],
+                isbn13=row["ISBN13"],
                 rating=normalize_rating(row["My Rating"]),
-                book_id=row["Book Id"],
                 publisher=row["Publisher"],
                 binding=row["Binding"],
+                year_published=row["Year Published"],
             )
         )
 

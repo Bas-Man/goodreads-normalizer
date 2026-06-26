@@ -21,8 +21,11 @@ class Book(BaseModel):
     author: str
     rating: int
     book_id: str
+    isbn: str
+    isbn13: str
     publisher: str
     binding: str
+    year_published: str
 
     @property
     def title(self):
