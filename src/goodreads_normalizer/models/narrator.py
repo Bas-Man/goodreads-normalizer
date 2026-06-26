@@ -6,7 +6,7 @@ from pydantic import (
     PrivateAttr,
 )
 from goodreads_normalizer.parsers.regex_patterns import AUTHOR_NAME
-from goodreads_normalizer.normalize.books import normalize_author_name
+from goodreads_normalizer.normalize.author_narrator import normalize_author_name
 from typing import Self
 
 

@@ -1,4 +1,4 @@
-from goodreads_normalizer.normalize.books import normalize_author_name
+from goodreads_normalizer.normalize.author_narrator import normalize_author_name
 
 
 def test_author_whitespace_normalized():

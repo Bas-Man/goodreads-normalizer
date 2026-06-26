@@ -5,7 +5,7 @@
 """
 
 from pydantic import BaseModel, computed_field, model_validator, PrivateAttr
-from goodreads_normalizer.normalize.books import normalize_author_name
+from goodreads_normalizer.normalize.author_narrator import normalize_author_name
 from goodreads_normalizer.validation.author import validate_author_name
 from goodreads_normalizer.data.known_en_authors import PEN_NAME_TO_NAME
 from goodreads_normalizer.parsers.regex_patterns import AUTHOR_NAME

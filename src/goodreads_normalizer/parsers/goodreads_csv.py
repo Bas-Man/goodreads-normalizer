@@ -5,9 +5,9 @@ import csv
 from goodreads_normalizer.models.book import Book
 from goodreads_normalizer.normalize.books import (
     normalize_rating,
-    normalize_author_name,
     normalize_book_title,
 )
+from goodreads_normalizer.normalize.author_narrator import normalize_author_name
 
 
 def parse_goodreads_csv(file_obj) -> list[Book]:
