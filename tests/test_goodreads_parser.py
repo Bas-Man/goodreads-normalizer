@@ -22,6 +22,7 @@ def test_parse_books():
     assert books[0].author == "David Burke"
     assert books[0].rating == 0
     assert books[0].book_id == "226152904"
+    assert books[0].publisher == "Podium Audio"
 
     assert books[1].rating == 3
     assert books[1].author == "David Burke"
