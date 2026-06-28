@@ -4,6 +4,11 @@ from goodreads_normalizer.parsers.regex_patterns import ADDITIONAL_AUTHOR
 def parse_additional_author(additional_author: str) -> list[str]:
     """
     This function parses the additional author field and returns it as a list.
+    Removes names that end with any of the following:
+        "- editor"
+        "- translator"
+        "(translator)
+        "(editor)
     Args:
         additional_author (str):
 
