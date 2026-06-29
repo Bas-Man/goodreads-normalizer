@@ -12,7 +12,17 @@ def transform_author_additional_authors(
     additional_author_field: str | None = None,
     binding: str | None = None,
 ) -> tuple[list[Author], list[Narrator]]:
+    """
+    Document me!!
+    Args:
+        author_field (str):
+        additional_author_field (str):
+        binding (str):
 
+    Returns:
+        tuple[list[Author], list[Narrator]]:
+
+    """
     authors: list[Author] = [Author(name=author_field)]
     narrators: list[Narrator] = []
     is_audiobook: bool = False
