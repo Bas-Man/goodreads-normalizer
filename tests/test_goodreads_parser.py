@@ -141,8 +141,10 @@ def test_parse_books2():
         "not-yet-finished (#2)",
         "unable-to-finish (#2)",
     ]
+    assert books[3].read_count == 0
 
     assert books[4].book_shelves_with_positions == [
         "not-yet-finished (#5)",
         "unable-to-finish (#1)",
     ]
+    assert books[4].read_count == 0
