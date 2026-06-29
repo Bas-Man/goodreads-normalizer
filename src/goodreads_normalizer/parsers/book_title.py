@@ -8,9 +8,8 @@ def parse_title(title: str) -> BookTitleData:
     patterns = [
         regex_patterns.RULE_1,
         regex_patterns.RULE_2,
-        regex_patterns.RULE_3,  # Add future patterns here
+        regex_patterns.RULE_3,
         regex_patterns.RULE_4,
-        # regex_patterns.TITLE_ONLY
     ]
 
     for pattern in patterns:
