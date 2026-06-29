@@ -1,5 +1,8 @@
 # src/goodreads_normalizer/models/book.py
-from pydantic import BaseModel, Field
+import datetime
+from typing import Any
+
+from pydantic import BaseModel, Field, field_validator
 from goodreads_normalizer.models.author import Author
 from goodreads_normalizer.models.narrator import Narrator
 
@@ -19,16 +22,53 @@ class BookTitleData(BaseModel):
 
 
 class Book(BaseModel):
+    book_id: str
     title_data: BookTitleData
     authors: list[Author] = Field(default_factory=list)
     narrators: list[Narrator] = Field(default_factory=list)
+    isbn: str | None
+    isbn13: str | None
     rating: int
-    book_id: str
-    isbn: str
-    isbn13: str
     publisher: str
     binding: str
+    pages: int
     year_published: str
+    original_publication_year: str
+    date_read: datetime.date | None = None
+    date_added: datetime.date | None = None
+    book_shelves: list[str] = []
+    book_shelves_with_positions: list[str] = []
+    exclusive_shelf: str
+    my_review: str
+    spoiler: str
+    private_notes: str
+    read_count: int
+    owned_copies: int
+
+    @field_validator("date_read", "date_added", mode="before")
+    @classmethod
+    def _parse_date(cls, value: Any) -> datetime.date | None:
+        if not value:
+            return None
+        try:
+            return datetime.date.fromisoformat(str(value).replace("/", "-"))
+        except ValueError:
+            return None
+
+    @field_validator("isbn", "isbn13", mode="before")
+    @classmethod
+    def _parse_isbn(cls, value: Any) -> str | None:
+        value = value.strip()
+        if not value or (value == '=""' or value == '"="""""'):
+            return None
+        return str(value).strip("=")
+
+    @field_validator("book_shelves", "book_shelves_with_positions", mode="before")
+    @classmethod
+    def _parse_book_shelves(cls, value: str) -> list[str]:
+        if value is None or len(value) == 0:
+            return []
+        return value.split(", ")
 
     @property
     def title(self):
