@@ -67,7 +67,16 @@ class Book(BaseModel):
 
     @field_validator("book_shelves", "book_shelves_with_positions", mode="before")
     @classmethod
-    def _parse_book_shelves(cls, value: str) -> list[str]:
+    def parse_book_shelves(cls, value: str) -> list[str]:
+        """
+        Converts the single string into its parts, creating a list of shelves
+
+        Args:
+            value (str):
+
+        Returns:
+            list[str]: The list of shelves associated with this book
+        """
         if value is None or len(value) == 0:
             return []
         return value.split(", ")
