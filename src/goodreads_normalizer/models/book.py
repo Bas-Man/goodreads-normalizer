@@ -3,6 +3,8 @@ import datetime
 from typing import Any
 
 from pydantic import BaseModel, Field, field_validator
+from pydantic_core.core_schema import ValidationInfo
+
 from goodreads_normalizer.models.author import Author
 from goodreads_normalizer.models.narrator import Narrator
 
@@ -69,6 +71,25 @@ class Book(BaseModel):
         if value is None or len(value) == 0:
             return []
         return value.split(", ")
+
+    @field_validator("read_count")
+    @classmethod
+    def adjust_read_count(cls, value: int, info: ValidationInfo) -> int:
+        """
+        If the book is on the "unable-to-finish" shelf, ensure that read_count is 0
+        Goodreads csv export tends to set the read_count to 1 even of the book is not finished.
+
+        Args:
+            value (int):
+            info (str):
+
+        Returns:
+            int: The read_count for this book
+        """
+        shelf = info.data.get("exclusive_shelf")
+        if shelf is None or shelf == "unable-to-finish":
+            return 0
+        return value
 
     @property
     def title(self):
