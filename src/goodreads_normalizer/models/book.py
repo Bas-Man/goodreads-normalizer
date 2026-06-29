@@ -86,7 +86,7 @@ class Book(BaseModel):
     def adjust_read_count(cls, value: int, info: ValidationInfo) -> int:
         """
         If the book is on the "unable-to-finish" shelf, ensure that read_count is 0
-        Goodreads csv export tends to set the read_count to 1 even of the book is not finished.
+        Goodreads csv export tends to set the read_count to 1 even of the book is not finishedh
 
         Args:
             value (int):
