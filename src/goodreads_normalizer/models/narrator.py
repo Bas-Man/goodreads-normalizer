@@ -66,8 +66,14 @@ class Narrator(BaseModel):
 
     @model_validator(mode="after")
     def check_name(self) -> Self:
-        if "- editor" in self.name:
+        """
+        Checks that the name appear to be a Translator or Editor.
+        I expect this will need some refactoring
+        Returns:
+
+        """
+        if "- editor" in self.name.lower():
             raise ValueError("Narrator name contains '- editor'")
-        elif "- translator" in self.name:
+        elif "- translator" in self.name.lower():
             raise ValueError("Narrator name contains '- translator'")
         return self

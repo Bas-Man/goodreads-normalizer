@@ -13,7 +13,9 @@ def transform_author_additional_authors(
     binding: str | None = None,
 ) -> tuple[list[Author], list[Narrator]]:
     """
-    Document me!!
+    This function uses the csv fields "Author", "Additional Authors" and "Binding" to create
+    Author and Narrator objects.
+    Translators and Editors are ignored if it can be determined.
     Args:
         author_field (str):
         additional_author_field (str):
