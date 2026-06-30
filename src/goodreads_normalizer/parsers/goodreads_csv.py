@@ -5,8 +5,8 @@ import csv
 from goodreads_normalizer.models.book import Book
 from goodreads_normalizer.normalize.books import (
     normalize_rating,
-    normalize_book_title,
 )
+from goodreads_normalizer.transform.books import transform_book_title
 from goodreads_normalizer.transform.additional_author_field import (
     transform_author_additional_authors,
 )
@@ -24,7 +24,7 @@ def parse_goodreads_csv(file_obj) -> list[Book]:
         books.append(
             Book(
                 book_id=row["Book Id"],
-                title_data=normalize_book_title(row["Title"]),
+                title_data=transform_book_title(row["Title"]),
                 authors=authors,
                 narrators=narrators,
                 isbn=row.get("ISBN", ""),
