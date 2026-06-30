@@ -57,16 +57,16 @@ class Book(BaseModel):
 
     @field_validator("title_data", mode="before")
     @classmethod
-    def _build_title_data(cls, value: str) -> BookTitleData:
-        return transform_book_title(value)
+    def _build_title_data(cls, raw_title: str) -> BookTitleData:
+        return transform_book_title(raw_title)
 
     @field_validator("date_read", "date_added", mode="before")
     @classmethod
-    def _parse_date(cls, value: Any) -> datetime.date | None:
-        if not value:
+    def _parse_date(cls, date_str: str) -> datetime.date | None:
+        if not date_str:
             return None
         try:
-            return datetime.date.fromisoformat(str(value).replace("/", "-"))
+            return datetime.date.fromisoformat(str(date_str).replace("/", "-"))
         except ValueError:
             return None
 
@@ -80,29 +80,29 @@ class Book(BaseModel):
 
     @field_validator("book_shelves", "book_shelves_with_positions", mode="before")
     @classmethod
-    def parse_book_shelves(cls, value: str) -> list[str]:
+    def parse_book_shelves(cls, shelves: str) -> list[str]:
         """
         Converts the single string into its parts, creating a list of shelves
 
         Args:
-            value (str):
+            shelves (str):
 
         Returns:
             list[str]: The list of shelves associated with this book
         """
-        if value is None or len(value) == 0:
+        if shelves is None or len(shelves) == 0:
             return []
-        return value.split(", ")
+        return shelves.split(", ")
 
     @field_validator("read_count")
     @classmethod
-    def adjust_read_count(cls, value: int, info: ValidationInfo) -> int:
+    def adjust_read_count(cls, read_count: int, info: ValidationInfo) -> int:
         """
         If the book is on the "unable-to-finish" shelf, ensure that read_count is 0
         Goodreads csv export tends to set the read_count to 1 even of the book is not finishedh
 
         Args:
-            value (int):
+            read_count (int):
             info (str):
 
         Returns:
@@ -111,7 +111,7 @@ class Book(BaseModel):
         shelf = info.data.get("exclusive_shelf")
         if shelf is None or shelf == "unable-to-finish":
             return 0
-        return value
+        return read_count
 
     @property
     def title(self) -> str:
