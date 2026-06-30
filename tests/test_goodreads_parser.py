@@ -56,6 +56,10 @@ def test_parse_books2():
     books = parse_goodreads_csv(StringIO(CSV_DATA2))
     assert len(books) == 5
     assert books[0].book_id == "247447878"
+    assert (
+        books[0].original_title
+        == "Unchained: A Litrpg Apocalypse (Welcome to the Multiverse Book 11)"
+    )
     assert books[0].title == "Unchained: A Litrpg Apocalypse"
     assert books[0].series[0].name == "Welcome to the Multiverse"
     assert books[0].series[0].numbers == ["11"]
@@ -81,6 +85,7 @@ def test_parse_books2():
     assert books[0].owned_copies == 0
 
     assert books[1].book_id == "226152904"
+    assert books[1].original_title == "Crystal Core 3: Crystal Core, Book 3"
     assert books[1].title == "Crystal Core 3"
     assert books[1].series[0].name == "Crystal Core"
     assert books[1].series[0].numbers == ["3"]
@@ -109,6 +114,7 @@ def test_parse_books2():
     assert books[1].owned_copies == 0
 
     assert books[2].book_id == "226146301"
+    assert books[2].original_title == "Crystal Core: Crystal Core, Book 1"
     assert books[2].title == "Crystal Core"
     assert books[2].series[0].name == "Crystal Core"
     assert books[2].series[0].numbers == ["1"]

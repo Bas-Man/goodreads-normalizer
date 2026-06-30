@@ -102,8 +102,12 @@ class Book(BaseModel):
         return value
 
     @property
-    def title(self):
+    def title(self) -> str:
         return self.title_data.title
+
+    @property
+    def original_title(self) -> str:
+        return self.title_data.original_title
 
     @property
     def series(self):
