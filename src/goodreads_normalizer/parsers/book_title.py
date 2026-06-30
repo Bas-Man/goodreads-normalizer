@@ -1,9 +1,9 @@
-from goodreads_normalizer.models.book import BookTitleData, Series
+from goodreads_normalizer.models.book_title import Series, BookTitleData
 from goodreads_normalizer.parsers import regex_patterns
 
 
 def parse_title(title: str) -> BookTitleData:
-    original_title = title
+    raw_title = title
     clean_title = title.strip().replace("‘", "'").replace("’", "'").replace(",", ",")
     # Put your patterns here in order of priority
     patterns = [
@@ -22,10 +22,9 @@ def parse_title(title: str) -> BookTitleData:
             if groups.get("SN1"):
                 series_list = _get_series(groups)
             return BookTitleData(
-                original_title=original_title, title=title, series=series_list
+                original_title=raw_title, title=title, series=series_list
             )
-    # Fallback if no patterns matched
-    return BookTitleData(original_title=original_title, title="Unknown", series=[])
+    raise ValueError(f"Could not parse book title: {raw_title!r}")
 
 
 def _get_series(groups: dict[str, str]) -> list[Series]:

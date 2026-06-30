@@ -2,40 +2,16 @@
 import datetime
 from typing import Any
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 from pydantic_core.core_schema import ValidationInfo
 
 from goodreads_normalizer.models.author import Author
+from goodreads_normalizer.models.book_title import BookTitleData
 from goodreads_normalizer.models.narrator import Narrator
-
-
-class Series(BaseModel):
-    """
-    This model stores information about the book series the book belongs to.
-    It also stores the books series numbers
-    Note: numbers is a list[str]
-    ["1"] Book number 1 of series
-    ["1", "2"] Books ond and two of series
-    ["3", "5"] Books 3, 4 and 5 of series
-    """
-
-    name: str
-    numbers: list[str] = Field(default_factory=list)
-
-
-class BookTitleData(BaseModel):
-    """
-    This model stores information extract from the "Title" row in the goodreads csv.
-    """
-
-    original_title: str
-    title: str
-    # A book can belong to 0, 1, or many series
-    series: list[Series] = Field(default_factory=list)
-
-    @property
-    def is_a_crossover(self) -> bool:
-        return len(self.series) > 0
+from goodreads_normalizer.transform.additional_author_field import (
+    transform_author_additional_authors,
+)
+from goodreads_normalizer.transform.books import transform_book_title
 
 
 class Book(BaseModel):
@@ -65,6 +41,24 @@ class Book(BaseModel):
     private_notes: str
     read_count: int
     owned_copies: int
+
+    @model_validator(mode="before")
+    @classmethod
+    def _build_authors_narrators(cls, data: dict) -> dict:
+        if isinstance(data, dict) and "authors" not in data:
+            authors, narrators = transform_author_additional_authors(
+                data.get("Author", ""),
+                data.get("Additional Authors", ""),
+                data.get("Binding", ""),
+            )
+            data["authors"] = authors
+            data["narrators"] = narrators
+        return data
+
+    @field_validator("title_data", mode="before")
+    @classmethod
+    def _build_title_data(cls, value: str) -> BookTitleData:
+        return transform_book_title(value)
 
     @field_validator("date_read", "date_added", mode="before")
     @classmethod
