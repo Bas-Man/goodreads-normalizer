@@ -90,6 +90,10 @@ class Author(BaseModel):
     @computed_field
     @property
     def last_first_name(self) -> str:
+        """
+        Returns:
+            str: last_name, first_name
+        """
         return (
             f"{self._last_name}, {self._first_name}"
             if self._first_name

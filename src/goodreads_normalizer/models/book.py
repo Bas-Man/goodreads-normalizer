@@ -10,21 +10,39 @@ from goodreads_normalizer.models.narrator import Narrator
 
 
 class Series(BaseModel):
+    """
+    This model stores information about the book series the book belongs to.
+    It also stores the books series numbers
+    Note: numbers is a list[str]
+    ["1"] Book number 1 of series
+    ["1", "2"] Books ond and two of series
+    ["3", "5"] Books 3, 4 and 5 of series
+    """
+
     name: str
     numbers: list[str] = Field(default_factory=list)
 
 
 class BookTitleData(BaseModel):
+    """
+    This model stores information extract from the "Title" row in the goodreads csv.
+    """
+
     original_title: str
     title: str
     # A book can belong to 0, 1, or many series
     series: list[Series] = Field(default_factory=list)
 
+    @property
     def is_a_crossover(self) -> bool:
         return len(self.series) > 0
 
 
 class Book(BaseModel):
+    """
+    This model stores row data from goodreads_export.csv file
+    """
+
     book_id: str
     title_data: BookTitleData
     authors: list[Author] = Field(default_factory=list)
@@ -103,30 +121,50 @@ class Book(BaseModel):
 
     @property
     def title(self) -> str:
+        """
+        Returns: Normalized title of the book
+            str:
+        """
         return self.title_data.title
 
     @property
     def original_title(self) -> str:
+        """
+        Returns: Original title of the book
+        """
         return self.title_data.original_title
 
     @property
     def series(self):
+        """
+        Gives access to the Series Object
+        Returns: Series Object
+        """
         return self.title_data.series
 
+    @property
     def is_a_crossover(self) -> bool:
         """Belongs to multiple distinct series."""
-        return len(self.series) > 1
+        return len(self.title_data.series) > 1
 
+    @property
     def is_series_collection(self) -> bool:
         """Belongs to 1 series, but spans multiple book numbers."""
+        return (
+            len(self.title_data.series) == 1
+            and len(self.title_data.series[0].numbers) > 1
+        )
 
-        return len(self.series) == 1 and len(self.series[0].numbers) > 1
-
+    @property
     def is_single_book(self) -> bool:
         """Belongs to 1 series, and is just a single entry."""
 
-        return len(self.series) == 1 and len(self.series[0].numbers) == 1
+        return (
+            len(self.title_data.series) == 1
+            and len(self.title_data.series[0].numbers) == 1
+        )
 
+    @property
     def is_a_stand_alone_book(self) -> bool:
         """Belongs to 0 series."""
-        return len(self.series) == 0
+        return len(self.title_data.series) == 0
