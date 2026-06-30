@@ -15,6 +15,7 @@ class Series(BaseModel):
 
 
 class BookTitleData(BaseModel):
+    original_title: str
     title: str
     # A book can belong to 0, 1, or many series
     series: list[Series] = Field(default_factory=list)

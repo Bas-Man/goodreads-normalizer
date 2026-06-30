@@ -3,6 +3,7 @@ from goodreads_normalizer.parsers import regex_patterns
 
 
 def parse_title(title: str) -> BookTitleData:
+    original_title = title
     clean_title = title.strip().replace("‘", "'").replace("’", "'").replace(",", ",")
     # Put your patterns here in order of priority
     patterns = [
@@ -20,9 +21,11 @@ def parse_title(title: str) -> BookTitleData:
             title = str(groups["Title"]).strip()
             if groups.get("SN1"):
                 series_list = _get_series(groups)
-            return BookTitleData(title=title, series=series_list)
+            return BookTitleData(
+                original_title=original_title, title=title, series=series_list
+            )
     # Fallback if no patterns matched
-    return BookTitleData(title="Unknown", series=[])
+    return BookTitleData(original_title=original_title, title="Unknown", series=[])
 
 
 def _get_series(groups: dict[str, str]) -> list[Series]:

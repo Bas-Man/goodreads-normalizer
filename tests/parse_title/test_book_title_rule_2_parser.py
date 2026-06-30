@@ -30,5 +30,6 @@ def test_parse_titles_only(
     input_title: str, expected_title: str, expected_series: list
 ):
     this_book: BookTitleData = parse_title(input_title)
+    assert this_book.original_title == input_title
     assert this_book.title == expected_title
     assert this_book.series == expected_series
