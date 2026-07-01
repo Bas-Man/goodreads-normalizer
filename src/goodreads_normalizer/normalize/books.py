@@ -1,11 +1,9 @@
 # src/goodreads_normalizer/normalize/books.py
 
 
-def normalize_rating(value: str | None) -> int:
+def normalize_number(value: str | None) -> int:
     if value is None:
         return 0
-
-    value = value.strip()
 
     if not value:
         return 0

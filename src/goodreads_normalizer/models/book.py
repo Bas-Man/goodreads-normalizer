@@ -8,6 +8,7 @@ from pydantic_core.core_schema import ValidationInfo
 from goodreads_normalizer.models.author import Author
 from goodreads_normalizer.models.book_title import BookTitleData
 from goodreads_normalizer.models.narrator import Narrator
+from goodreads_normalizer.normalize.books import normalize_number
 from goodreads_normalizer.transform.additional_author_field import (
     transform_author_additional_authors,
 )
@@ -55,6 +56,11 @@ class Book(BaseModel):
             data["narrators"] = narrators
         return data
 
+    @field_validator("rating", "pages", "owned_copies", mode="before")
+    @classmethod
+    def _normalize_rating_pages_owned(cls, raw_number: str) -> int:
+        return normalize_number(raw_number)
+
     @field_validator("title_data", mode="before")
     @classmethod
     def _build_title_data(cls, raw_title: str) -> BookTitleData:
@@ -99,7 +105,7 @@ class Book(BaseModel):
     def adjust_read_count(cls, read_count: int, info: ValidationInfo) -> int:
         """
         If the book is on the "unable-to-finish" shelf, ensure that read_count is 0
-        Goodreads csv export tends to set the read_count to 1 even of the book is not finishedh
+        Goodreads csv export tends to set the read_count to 1 even of the book is not finished
 
         Args:
             read_count (int):
