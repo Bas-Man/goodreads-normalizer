@@ -145,20 +145,16 @@ class Book(BaseModel):
     @property
     def is_a_crossover(self) -> bool:
         """Belongs to multiple distinct series."""
-        return len(self.title_data.series) > 1
+        return self.title_data.is_a_crossover
 
     @property
     def is_series_collection(self) -> bool:
         """Belongs to 1 series, but spans multiple book numbers."""
-        return (
-            len(self.title_data.series) == 1
-            and len(self.title_data.series[0].numbers) > 1
-        )
+        return self.title_data.is_collection
 
     @property
     def is_single_book(self) -> bool:
         """Belongs to 1 series, and is just a single entry."""
-
         return (
             len(self.title_data.series) == 1
             and len(self.title_data.series[0].numbers) == 1
@@ -166,5 +162,9 @@ class Book(BaseModel):
 
     @property
     def is_a_stand_alone_book(self) -> bool:
-        """Belongs to 0 series."""
-        return len(self.title_data.series) == 0
+        """
+        This is a standalone book. Does not belong to any series
+        Returns:
+            bool:
+        """
+        return self.title_data.is_stand_alone
