@@ -31,7 +31,7 @@ class BookTitleData(BaseModel):
 
     @property
     def is_part_of_series(self) -> bool:
-        return len(self.series) >= 1
+        return len(self.series) > 0
 
     @property
     def is_stand_alone(self) -> bool:
