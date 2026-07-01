@@ -36,3 +36,7 @@ class BookTitleData(BaseModel):
     @property
     def is_stand_alone(self) -> bool:
         return len(self.series) == 0
+
+    @property
+    def is_collection(self) -> bool:
+        return len(self.series) == 1 and len(self.series[0].numbers) > 1
