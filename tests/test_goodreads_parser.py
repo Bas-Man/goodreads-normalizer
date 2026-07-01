@@ -1,6 +1,7 @@
 # tests/test_goodreads_parser.py
 import datetime
 from io import StringIO
+from pathlib import Path
 
 from goodreads_normalizer.models.narrator import Narrator
 from goodreads_normalizer.parsers.goodreads_csv import parse_goodreads_csv
@@ -60,6 +61,10 @@ def test_parse_books2():
         books[0].original_title
         == "Unchained: A Litrpg Apocalypse (Welcome to the Multiverse Book 11)"
     )
+    assert (
+        books[0].original_title
+        == "Unchained: A Litrpg Apocalypse (Welcome to the Multiverse Book 11)"
+    )
     assert books[0].title == "Unchained: A Litrpg Apocalypse"
     assert books[0].series[0].name == "Welcome to the Multiverse"
     assert books[0].series[0].numbers == ["11"]
@@ -89,6 +94,8 @@ def test_parse_books2():
     assert books[1].title == "Crystal Core 3"
     assert books[1].series[0].name == "Crystal Core"
     assert books[1].series[0].numbers == ["3"]
+    assert not books[1].is_a_stand_alone_book
+    assert not books[1].is_series_collection
     assert books[1].authors[0].name == "David Burke"
     assert books[1].narrators == [
         Narrator(name="Daniel Wisniewski"),
@@ -154,3 +161,26 @@ def test_parse_books2():
         "unable-to-finish (#1)",
     ]
     assert books[4].read_count == 0
+
+
+CSV_DATA3 = (Path(__file__).parent / "data" / "test_data3.csv").read_text()
+
+
+def test_parse_books3():
+    books = parse_goodreads_csv(StringIO(CSV_DATA3))
+    assert len(books) == 3
+    assert books[0].book_id == "45447539"
+    assert books[0].is_a_crossover
+    assert not books[0].is_a_stand_alone_book
+    assert books[0].series[0].name == "Will Trent"
+    assert books[0].series[0].numbers == ["8.5"]
+    assert books[0].series[1].name == "Jack Reacher"
+    assert books[0].series[1].numbers == ["23.6"]
+
+    assert books[1].book_id == "27234705"
+    assert not books[1].is_a_crossover
+    assert not books[1].is_series_collection
+    assert books[1].is_a_stand_alone_book
+
+    assert books[2].is_series_collection
+    assert books[2].series[0].numbers == ["1", "3"]
