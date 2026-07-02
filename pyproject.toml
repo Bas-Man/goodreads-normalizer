@@ -35,6 +35,16 @@ exclude = [
 [dependency-groups]
 dev = ["mypy>=2.1.0", "pytest>=9.0.3", "pytest-cov>=7.1.0", "ruff>=0.15.14"]
 
+#docs = [
+#    "sphinx>=8.0",
+#    "myst-parser>=4.0",
+#    "furo>=2024.8.6",
+#]
+
+great-docs = [
+    "great-docs",
+]
+
 [tool.ruff]
 line-length = 88
 
