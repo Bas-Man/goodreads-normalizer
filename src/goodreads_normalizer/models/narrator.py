@@ -79,6 +79,16 @@ class Narrator(BaseModel):
         )
         return slug.replace(" ", "-").replace("'", "").lower()
 
+    @computed_field
+    @property
+    def name_with_short_tag(self) -> str:
+        return f"{self.name} (N)"
+
+    @computed_field
+    @property
+    def name_with_long_tag(self) -> str:
+        return f"{self.name} (Narrator)"
+
     @model_validator(mode="after")
     def _check_name(self) -> Self:
         """
