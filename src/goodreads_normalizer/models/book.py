@@ -1,12 +1,16 @@
-# src/goodreads_normalizer/models/book.py
-import datetime
-from typing import Any
+"""
+# Author: Bas-Man
+# Created Date: 2025-6-24
+# File: models/book.py
+"""
 
-from pydantic import BaseModel, Field, field_validator, model_validator
+import datetime
+
+from pydantic import BaseModel, Field, field_validator, model_validator, computed_field
 from pydantic_core.core_schema import ValidationInfo
 
 from goodreads_normalizer.models.author import Author
-from goodreads_normalizer.models.book_title import BookTitleData
+from goodreads_normalizer.models.book_title import BookTitleData, Series
 from goodreads_normalizer.models.narrator import Narrator
 from goodreads_normalizer.normalize.books import normalize_number
 from goodreads_normalizer.transform.additional_author_field import (
@@ -17,7 +21,10 @@ from goodreads_normalizer.transform.books import transform_book_title
 
 class Book(BaseModel):
     """
-    This model stores row data from goodreads_export.csv file
+    This model stores all row data read from goodreads_export.csv file
+
+    Example:
+        Book(**row, book_id=row["Book Id"])
     """
 
     book_id: str
@@ -78,7 +85,7 @@ class Book(BaseModel):
 
     @field_validator("isbn", "isbn13", mode="before")
     @classmethod
-    def _parse_isbn(cls, value: Any) -> str | None:
+    def _parse_isbn(cls, value: str) -> str | None:
         value = value.strip()
         if not value or (value == '=""' or value == '"="""""'):
             return None
@@ -86,7 +93,7 @@ class Book(BaseModel):
 
     @field_validator("book_shelves", "book_shelves_with_positions", mode="before")
     @classmethod
-    def parse_book_shelves(cls, shelves: str) -> list[str]:
+    def _parse_book_shelves(cls, shelves: str) -> list[str]:
         """
         Converts the single string into its parts, creating a list of shelves
 
@@ -102,7 +109,7 @@ class Book(BaseModel):
 
     @field_validator("read_count")
     @classmethod
-    def adjust_read_count(cls, read_count: int, info: ValidationInfo) -> int:
+    def _adjust_read_count(cls, read_count: int, info: ValidationInfo) -> int:
         """
         If the book is on the "unable-to-finish" shelf, ensure that read_count is 0
         Goodreads csv export tends to set the read_count to 1 even of the book is not finished
@@ -119,6 +126,7 @@ class Book(BaseModel):
             return 0
         return read_count
 
+    @computed_field
     @property
     def title(self) -> str:
         """
@@ -127,6 +135,7 @@ class Book(BaseModel):
         """
         return self.title_data.title
 
+    @computed_field()
     @property
     def original_title(self) -> str:
         """
@@ -134,24 +143,28 @@ class Book(BaseModel):
         """
         return self.title_data.original_title
 
+    @computed_field()
     @property
-    def series(self):
+    def series(self) -> list[Series]:
         """
         Gives access to the Series Object
         Returns: Series Object
         """
         return self.title_data.series
 
+    @computed_field()
     @property
     def is_a_crossover(self) -> bool:
         """Belongs to multiple distinct series."""
         return self.title_data.is_a_crossover
 
+    @computed_field()
     @property
     def is_series_collection(self) -> bool:
         """Belongs to 1 series, but spans multiple book numbers."""
         return self.title_data.is_collection
 
+    @computed_field()
     @property
     def is_single_book(self) -> bool:
         """Belongs to 1 series, and is just a single entry."""
@@ -160,6 +173,7 @@ class Book(BaseModel):
             and len(self.title_data.series[0].numbers) == 1
         )
 
+    @computed_field()
     @property
     def is_a_stand_alone_book(self) -> bool:
         """

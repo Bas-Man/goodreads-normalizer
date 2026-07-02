@@ -1,3 +1,9 @@
+"""
+# Author: Bas-Man
+# Created Date: 2026-06-24
+# File: narrator.py
+"""
+
 from pydantic import (
     BaseModel,
     model_validator,
@@ -11,6 +17,10 @@ from typing import Self
 
 
 class Narrator(BaseModel):
+    """
+    The Narrator model stores information about a narrator found in the "Additional Authors" Column
+    """
+
     name: str
     _first_name: str = PrivateAttr(default="")
     _last_name: str = PrivateAttr(default="")
@@ -27,6 +37,11 @@ class Narrator(BaseModel):
             self._first_name = match.group("first_name")
             self._last_name = match.group("last_name") or ""
         return self
+
+    @computed_field()
+    @property
+    def full_name(self) -> str:
+        return self.name
 
     @computed_field
     @property
@@ -65,7 +80,7 @@ class Narrator(BaseModel):
         return slug.replace(" ", "-").replace("'", "").lower()
 
     @model_validator(mode="after")
-    def check_name(self) -> Self:
+    def _check_name(self) -> Self:
         """
         Checks that the name appear to be a Translator or Editor.
         I expect this will need some refactoring
