@@ -22,7 +22,9 @@ def parse_title(title: str) -> BookTitleData:
             if groups.get("SN1"):
                 series_list = _get_series(groups)
             return BookTitleData(
-                original_title=raw_title, title=title, series=series_list
+                original_title=" ".join(raw_title.split()),
+                title=title,
+                series=series_list,
             )
     raise ValueError(f"Could not parse book title: {raw_title!r}")
 
