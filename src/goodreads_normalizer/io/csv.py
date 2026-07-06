@@ -1,9 +1,20 @@
+from enum import Enum
 from pathlib import Path
 
 from goodreads_normalizer import Book, Author, Narrator
 from goodreads_normalizer.parsers.goodreads_csv import parse_goodreads_csv
 
 import csv
+
+
+class NameFormatter(str, Enum):
+    """
+    This Enum helps control the formatting of Narrator names.
+    """
+
+    name = "name"
+    short = "name_with_short_tag"
+    long = "name_with_long_tag"
 
 
 class GoodreadsImportError(Exception):
@@ -41,24 +52,36 @@ def load_csv(file_path: Path) -> list[Book]:
 
 
 def additional_authors(
-    authors: list[Author], additional_authors_list: list[Narrator]
+    authors: list[Author],
+    additional_authors_list: list[Narrator],
+    name_format: NameFormatter = NameFormatter.name,
 ) -> str:
     author_list: list[Author] = authors[1:]
 
     remaining_author_list: list[str] = []
     narrators_name_list: list[str] = []
+    method_name = name_format.value
 
     if author_list:
-        remaining_author_list = [author.name for author in author_list[1:]]
+        remaining_author_list = [author.name for author in author_list]
     if additional_authors_list:
-        narrators_name_list = [narrator.name for narrator in additional_authors_list]
+        narrators_name_list = [
+            getattr(narrator, method_name) for narrator in additional_authors_list
+        ]
 
     names = remaining_author_list + narrators_name_list
     return f"{', '.join(names) if names else ''}"
 
 
-def export_to_stream(books: list[Book], stream) -> None:
-    """Writes the book data directly into an open file-like stream (file or stdout)."""
+def export_to_stream(books: list[Book], stream, name_format: NameFormatter) -> None:
+    """
+    Writes the book data directly into an open file-like stream (file or stdout).
+
+    Based on the value of name_format the Narrator's name will be one of three possible outputs.\
+    NameFormatter.name: Just the Name\
+    NameFormatter.short: Name (N)\
+    NameFormatter.long: Name (Narrator)\
+    """
     headers = [
         "Book Id",
         "Title",
@@ -92,7 +115,9 @@ def export_to_stream(books: list[Book], stream) -> None:
             if book.authors[0].pen_name
             else book.authors[0].name
         )
-        additional_author_names = additional_authors(book.authors, book.narrators)  # type: ignore[call-arg]
+        additional_author_names = additional_authors(
+            book.authors, book.narrators, name_format
+        )  # type: ignore[call-arg]
         row = {
             "Book Id": book.book_id,
             "Title": book.original_title,
