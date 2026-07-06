@@ -1,7 +1,12 @@
 from pathlib import Path
 import typer
 
-from goodreads_normalizer.io.csv import GoodreadsImportError, load_csv, export_to_stream
+from goodreads_normalizer.io.csv import (
+    GoodreadsImportError,
+    load_csv,
+    export_to_stream,
+    NameFormatter,
+)
 
 app = typer.Typer(help="Goodreads CSV Cleaner and Formatter CLI")
 
@@ -47,7 +52,6 @@ def main(
     """
     Cleans, normalizes, and rewrites a Goodreads CSV export.
     """
-    # 1. Handle the fatal file reading via your load_csv function
     try:
         typer.echo(f"Reading file: {file_path}")
         books = load_csv(file_path)
@@ -57,20 +61,15 @@ def main(
         typer.secho(str(err), fg=typer.colors.RED, err=True)
         raise typer.Exit(code=1)
 
-    # 2. Flag behavior routing (to be expanded later)
+    name_format: NameFormatter = NameFormatter.name
     if short:
         typer.echo("Applying short formatting rules...")
-        # Your custom short logic goes here
-
+        name_format = NameFormatter.short
     elif long:
         typer.echo("Applying long formatting rules...")
-        # Your custom long logic goes here
+        name_format = NameFormatter.long
 
-    else:
-        typer.echo("Applying standard formatting rules...")
-        # Default behavior
-
-    export_to_stream(books, output)
+    export_to_stream(books, output, name_format)
 
     typer.secho(f"Successfully processed {len(books)} books!", fg=typer.colors.GREEN)
 
