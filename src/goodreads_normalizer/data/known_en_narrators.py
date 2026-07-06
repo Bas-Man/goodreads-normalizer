@@ -57,7 +57,6 @@ KNOWN_NARRATORS = {
     "Krysten Ritter",
     "Kyf Brewer",
     "Lauren K. Cannon",
-    "Lee Child",
     "Luke Chmilenko",
     "Luke Daniels",
     "MacLeod Andrews",
