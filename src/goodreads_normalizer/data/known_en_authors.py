@@ -99,7 +99,6 @@ KNOWN_AUTHORS = {
     "Ron McLarty",
     "Lee Child",
     "Scott Brick",
-    "Hye Young Im",
     "Simon Prebble",
     "Carlos Gómez",
     "Rebecca Woods",
