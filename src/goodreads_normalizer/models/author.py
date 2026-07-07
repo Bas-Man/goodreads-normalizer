@@ -41,7 +41,9 @@ class Author(BaseModel):
     @model_validator(mode="before")
     @classmethod
     def _resolve_pen_name(cls, data: dict) -> dict:
-        """Correctly treats input name as a pen name to look up the  name."""
+        """
+        Correctly treats input name as a pen name to look up the  name.
+        """
         if isinstance(data, dict):
             raw_name = data.get("name", "")
 
@@ -106,6 +108,7 @@ class Author(BaseModel):
         """
         Generates a slug string format: 'last-first' using active name.
         active name will either be the Author's nom deplume or their real name
+
         Returns:
             str: The string will be formatted suitable for the web
         """

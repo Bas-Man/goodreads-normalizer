@@ -10,6 +10,11 @@ import csv
 class NameFormatter(str, Enum):
     """
     This Enum helps control the formatting of Narrator names.
+
+    Attributes:
+        name: Return Narrator name without any tag.
+        short: Return Narrator name with (N) as the tag.
+        long: Return Narrator name with (Narrator) tag.
     """
 
     name = "name"
@@ -25,9 +30,14 @@ class GoodreadsImportError(Exception):
 
 def load_csv(file_path: Path) -> list[Book]:
     """
-    Loads and parses a Goodreads CSV file.
+    Loads and parses a Goodreads CSV file return a list of Books
 
-    Raises GoodreadsImportError if the file cannot be accessed.
+
+    Raises:
+        GoodreadsImportError if the file cannot be accessed.
+
+    Returns:
+        list[Book]
     """
     try:
         with open(file_path, mode="r", encoding="utf-8") as file:
@@ -77,10 +87,19 @@ def export_to_stream(books: list[Book], stream, name_format: NameFormatter) -> N
     """
     Writes the book data directly into an open file-like stream (file or stdout).
 
-    Based on the value of name_format the Narrator's name will be one of three possible outputs.\
-    NameFormatter.name: Just the Name\
-    NameFormatter.short: Name (N)\
-    NameFormatter.long: Name (Narrator)\
+    Format is managed by [NameFormatter](`NameFormatter`).
+
+    Args:
+        books: List of books to export.
+        stream: An open, writable file-like object (e.g. a file handle
+            opened in text mode, or ``sys.stdout``) that the formatted
+            book data is written to. The stream is not closed by this
+            function.
+        name_format: NameFormatter controlling how author and narrator names
+            are rendered in the output.
+
+    Returns:
+        None. Data is written to `stream` as a side effect.
     """
     headers = [
         "Book Id",

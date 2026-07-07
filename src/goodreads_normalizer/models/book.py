@@ -148,6 +148,7 @@ class Book(BaseModel):
     def series(self) -> list[Series]:
         """
         Gives access to the Series Object
+
         Returns: Series Object
         """
         return self.title_data.series
@@ -155,19 +156,25 @@ class Book(BaseModel):
     @computed_field()
     @property
     def is_a_crossover(self) -> bool:
-        """Belongs to multiple distinct series."""
+        """
+        Belongs to multiple distinct series.
+        """
         return self.title_data.is_a_crossover
 
     @computed_field()
     @property
     def is_series_collection(self) -> bool:
-        """Belongs to 1 series, but spans multiple book numbers."""
+        """
+        Belongs to 1 series, but spans multiple book numbers.
+        """
         return self.title_data.is_collection
 
     @computed_field()
     @property
     def is_single_book(self) -> bool:
-        """Belongs to 1 series, and is just a single entry."""
+        """
+        Belongs to 1 series, and is just a single entry.
+        """
         return (
             len(self.title_data.series) == 1
             and len(self.title_data.series[0].numbers) == 1
