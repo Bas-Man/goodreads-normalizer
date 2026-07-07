@@ -9,7 +9,7 @@ repos:
       - id: check-ast # Validates Python abstract syntax trees
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.19
+    rev: v0.15.20
     hooks:
       - id: ruff # Lints Python code (replaces Flake8, Autoflake)
         args: [--fix] # Automatically fix fixable lint errors
