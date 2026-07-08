@@ -18,6 +18,13 @@ dependencies = [
   "typer>=0.25.1",
 ]
 
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+
 [project.scripts]
 goodreads-normalizer = "goodreads_normalizer.cli.main:app"
 
