@@ -42,6 +42,16 @@ def main(
         help="Run format with long behavior (custom logic to be defined).",
     ),
 ):
+    """Cleans, normalizes, and rewrites a Goodreads CSV export.
+
+    Reads a Goodreads CSV export, applies name-formatting rules, and
+    writes the normalized result to the given output.
+
+    \b
+    Examples:
+      normalize-goodreads -f export.csv
+      normalize-goodreads -f export.csv -o clean.csv --short
+    """
     if short and long:
         typer.secho(
             "Error: Cannot specify both --short (-s) and --long (-l).",
@@ -49,9 +59,6 @@ def main(
             err=True,
         )
         raise typer.Exit(code=1)
-    """
-    Cleans, normalizes, and rewrites a Goodreads CSV export.
-    """
     try:
         typer.echo(f"Reading file: {file_path}")
         books = load_csv(file_path)
@@ -73,6 +80,8 @@ def main(
 
     typer.secho(f"Successfully processed {len(books)} books!", fg=typer.colors.GREEN)
 
+
+click_app = typer.main.get_command(app)
 
 if __name__ == "__main__":
     app()
