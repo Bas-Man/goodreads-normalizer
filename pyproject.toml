@@ -26,7 +26,7 @@ classifiers = [
 ]
 
 [project.scripts]
-goodreads-normalizer = "goodreads_normalizer.cli.main:app"
+normalize-goodreads = "goodreads_normalizer.cli.main:app"
 
 [build-system]
 requires = ["hatchling"]
