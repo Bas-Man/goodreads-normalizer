@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 authors = [{ name = "Adam.S", email = "Bas-Man@users.noreply.github.com" }]
-requires-python = ">=3.14"
+requires-python = ">=3.12"
 dependencies = [
   "black>=26.5.1",
   "httpx>=0.28.1",
@@ -40,7 +40,8 @@ exclude = [
 ]
 
 [dependency-groups]
-dev = ["mypy>=2.1.0", "pytest>=9.0.3", "pytest-cov>=7.1.0", "ruff>=0.15.14"]
+dev = ["mypy>=2.1.0", "pytest>=9.0.3", "pytest-cov>=7.1.0", "ruff>=0.15.14", "tox>=4",
+  "tox-uv>=1"]
 
 #docs = [
 #    "sphinx>=8.0",
@@ -56,6 +57,13 @@ line-length = 88
 [tool.mypy]
 disable_error_code = ["prop-decorator"]
 
+[tool.tox]
+env_list = ["py312", "py313", "py314"]
+
+[tool.tox.env_run_base]
+runner = "uv-venv-runner"
+commands = [["pytest", "{posargs:tests}"]]
+dependency_groups = ["dev"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
