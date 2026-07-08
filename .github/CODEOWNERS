@@ -1,0 +1,6 @@
+# Default owner
+* @bas-man
+
+.github/workflows/ @bas-man
+pyproject.toml @bas-man
+uv.lock @bas-man
