@@ -5,9 +5,6 @@ from typing import cast
 
 from goodreads_normalizer.models.book import Book
 from goodreads_normalizer.models.book_title import BookTitleData
-from goodreads_normalizer.transform.additional_author_field import (
-    transform_author_additional_authors,
-)
 
 
 def parse_goodreads_csv(file_obj) -> list[Book]:
@@ -16,9 +13,6 @@ def parse_goodreads_csv(file_obj) -> list[Book]:
     books = []
 
     for row in reader:
-        authors, narrators = transform_author_additional_authors(
-            row["Author"], row["Additional Authors"], row["Binding"]
-        )
         books.append(
             Book(
                 **row,  # type: ignore
