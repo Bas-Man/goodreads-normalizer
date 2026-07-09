@@ -5,6 +5,7 @@ from goodreads_normalizer import Book, Author, Narrator
 from goodreads_normalizer.parsers.goodreads_csv import parse_goodreads_csv
 
 import csv
+from typer import FileTextWrite
 
 
 class NameFormatter(str, Enum):
@@ -32,12 +33,14 @@ def load_csv(file_path: Path) -> list[Book]:
     """
     Loads and parses a Goodreads CSV file return a list of Books
 
-
-    Raises:
-        GoodreadsImportError if the file cannot be accessed.
+    Args:
+        file_path: GoodReads source csv file
 
     Returns:
-        list[Book]
+        list[Book]: A list of Book models
+
+    Raises:
+        GoodreadsImportError: If there is an issue reading the csv source data
     """
     try:
         with open(file_path, mode="r", encoding="utf-8") as file:
@@ -83,7 +86,9 @@ def additional_authors(
     return f"{', '.join(names) if names else ''}"
 
 
-def export_to_stream(books: list[Book], stream, name_format: NameFormatter) -> None:
+def export_to_stream(
+    books: list[Book], stream: FileTextWrite, name_format: NameFormatter
+) -> None:
     """
     Writes the book data directly into an open file-like stream (file or stdout).
 
@@ -99,7 +104,7 @@ def export_to_stream(books: list[Book], stream, name_format: NameFormatter) -> N
             are rendered in the output.
 
     Returns:
-        None. Data is written to `stream` as a side effect.
+        Data is written to `stream` as a side effect.
     """
     headers = [
         "Book Id",

@@ -51,6 +51,11 @@ def main(
     Examples:
       normalize-goodreads -f export.csv
       normalize-goodreads -f export.csv -o clean.csv --short
+      normalize-goodreads -f export.csv -o clean.csv -l
+
+    Options:
+        -s / --short (N)
+        -l / --long (Narrator)
     """
     if short and long:
         typer.secho(

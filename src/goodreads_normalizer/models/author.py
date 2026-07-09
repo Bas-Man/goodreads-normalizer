@@ -14,9 +14,13 @@ from typing import Self
 
 class Author(BaseModel):
     """
+    Examples:
+        Author(name="Brandon Sanderson")
+
     This object stores the information about an author.
-    The Author may have a non deplume.
-    If the Author name is in the KNOWN_NARRATORS list and is also not in the KNOWN_EN_AUTHORS list,
+    The Author may have a non de plume.
+
+    If the Author name is in the KNOWN_NARRATORS list and is also *not* in the KNOWN_EN_AUTHORS list,
     a ValueError will be raised, which is then transformed into a ValidationError by pydantic.
     """
 
@@ -30,9 +34,10 @@ class Author(BaseModel):
     @property
     def display_name(self) -> str:
         """
-        Provides either the Author's full real name, or their nom deplume
+        Provides either the Author's full real name, or their nom de plume
+
         Returns:
-            str: Author's nom deplume or their true full name if known
+            str: Author's nom de plume or their true full name if known
         """
         if self.pen_name:
             return self.pen_name
@@ -72,8 +77,6 @@ class Author(BaseModel):
     def first_name(self) -> str:
         """
         Gives access to the Author's first name if available, else ""
-        Returns:
-            str:
         """
         return self._first_name or ""
 
@@ -82,8 +85,6 @@ class Author(BaseModel):
     def last_name(self) -> str:
         """
         Gives access to the Author's last name if available, else their nom deplume
-        Returns:
-
         """
         if not self._last_name and self.pen_name:
             return self.pen_name
@@ -93,8 +94,7 @@ class Author(BaseModel):
     @property
     def last_first_name(self) -> str:
         """
-        Returns:
-            str: last_name, first_name
+        Generates the Author's name as "Last Name, First Name"
         """
         return (
             f"{self._last_name}, {self._first_name}"
@@ -107,7 +107,7 @@ class Author(BaseModel):
     def slug(self) -> str:
         """
         Generates a slug string format: 'last-first' using active name.
-        active name will either be the Author's nom deplume or their real name
+        Active name will either be the Author's nom de plume or their real name
 
         Returns:
             str: The string will be formatted suitable for the web

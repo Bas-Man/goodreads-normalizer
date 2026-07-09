@@ -22,9 +22,6 @@ from goodreads_normalizer.transform.books import transform_book_title
 class Book(BaseModel):
     """
     This model stores all row data read from goodreads_export.csv file
-
-    Example:
-        Book(**row, book_id=row["Book Id"])
     """
 
     book_id: str
@@ -130,6 +127,8 @@ class Book(BaseModel):
     @property
     def title(self) -> str:
         """
+        Gives the title of the book, excluding series name and position
+
         Returns: Normalized title of the book
             str:
         """
@@ -139,6 +138,8 @@ class Book(BaseModel):
     @property
     def original_title(self) -> str:
         """
+        Gives the original book title with additional spaces removed.
+
         Returns: Original title of the book
         """
         return self.title_data.original_title
@@ -157,7 +158,11 @@ class Book(BaseModel):
     @property
     def is_a_crossover(self) -> bool:
         """
-        Belongs to multiple distinct series.
+        This is True if the book belongs to more than a single series.
+        Example: "Cleaning the Gold" Belongs to both "Will Trent" and "Jack Reacher"
+
+        Returns:
+            bool:
         """
         return self.title_data.is_a_crossover
 
@@ -165,7 +170,12 @@ class Book(BaseModel):
     @property
     def is_series_collection(self) -> bool:
         """
-        Belongs to 1 series, but spans multiple book numbers.
+        This is True if the book is a collection containing more than one book from a single series
+
+        Note: Does not work for collection with multiple authors
+
+        Returns:
+            bool:
         """
         return self.title_data.is_collection
 
@@ -173,7 +183,10 @@ class Book(BaseModel):
     @property
     def is_single_book(self) -> bool:
         """
-        Belongs to 1 series, and is just a single entry.
+        This is True if the book is part of a single series and is not a collection.
+
+        Returns:
+            bool:
         """
         return (
             len(self.title_data.series) == 1
