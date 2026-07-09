@@ -14,11 +14,14 @@ from typing import Self
 
 class Author(BaseModel):
     """
-    Examples:
-        Author(name="Brandon Sanderson")
-
     This object stores the information about an author.
     The Author may have a non de plume.
+
+    Attributes:
+        name: The Author's full name
+
+    Examples:
+        Author(name="Brandon Sanderson")
 
     If the Author name is in the KNOWN_NARRATORS list and is also *not* in the KNOWN_EN_AUTHORS list,
     a ValueError will be raised, which is then transformed into a ValidationError by pydantic.

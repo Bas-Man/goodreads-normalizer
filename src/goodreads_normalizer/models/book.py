@@ -130,7 +130,6 @@ class Book(BaseModel):
         Gives the title of the book, excluding series name and position
 
         Returns: Normalized title of the book
-            str:
         """
         return self.title_data.title
 
@@ -198,7 +197,5 @@ class Book(BaseModel):
     def is_a_stand_alone_book(self) -> bool:
         """
         This is a standalone book. Does not belong to any series
-        Returns:
-            bool:
         """
         return self.title_data.is_stand_alone

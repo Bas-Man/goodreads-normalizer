@@ -18,7 +18,16 @@ from typing import Self
 
 class Narrator(BaseModel):
     """
-    The Narrator model stores information about a narrator found in the "Additional Authors" Column
+    The Narrator model stores information about a narrator found in the "Additional Authors" column
+
+    Attributes:
+        name: The full name of the narrator.
+
+    Examples:
+        ```python
+        Narrator(name="Travis Baldree")
+        ```
+
     """
 
     name: str
@@ -41,6 +50,7 @@ class Narrator(BaseModel):
     @computed_field()
     @property
     def full_name(self) -> str:
+        """Gives access to Narrator's Full Name"""
         return self.name
 
     @computed_field
@@ -48,8 +58,6 @@ class Narrator(BaseModel):
     def first_name(self) -> str:
         """
         Gives access to the Narrator's first name if available, else ""
-        Returns:
-            str:
         """
         return self._first_name or ""
 
@@ -58,9 +66,6 @@ class Narrator(BaseModel):
     def last_name(self) -> str:
         """
         Gives access to the Narrator's last name if available, else their nom deplume
-        Returns:
-            str:
-
         """
         return self._last_name
 
@@ -68,9 +73,7 @@ class Narrator(BaseModel):
     @property
     def slug(self) -> str:
         """
-
-        Returns:
-            str:
+        Gives a http save slug based on the narrator's full name. lastname-firstname
         """
         slug: str = (
             f"{self._last_name}-{self._first_name}"
@@ -82,11 +85,19 @@ class Narrator(BaseModel):
     @computed_field
     @property
     def name_with_short_tag(self) -> str:
+        """Gives narrator's full name with short tag
+        Example:
+            "Travis Baldree (N)"
+        """
         return f"{self.name} (N)"
 
     @computed_field
     @property
     def name_with_long_tag(self) -> str:
+        """Gives narrator's full name with long tag
+        Example:
+            "Travis Baldree (Narrator)"
+        """
         return f"{self.name} (Narrator)"
 
     @model_validator(mode="after")

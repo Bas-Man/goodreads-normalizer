@@ -12,10 +12,6 @@ class NameFormatter(str, Enum):
     """
     This Enum helps control the formatting of Narrator names.
 
-    Attributes:
-        name: Return Narrator name without any tag.
-        short: Return Narrator name with (N) as the tag.
-        long: Return Narrator name with (Narrator) tag.
     """
 
     name = "name"
