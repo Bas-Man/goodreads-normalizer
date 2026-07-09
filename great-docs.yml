@@ -10,7 +10,7 @@
 # Docstring Parser
 # ----------------
 # The docstring format used in your package (numpy, google, or sphinx)
-parser: numpy
+parser: google
 
 # Dynamic Introspection
 # ---------------------
