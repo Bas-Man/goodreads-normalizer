@@ -1,8 +1,8 @@
 from goodreads_normalizer.models.narrator import Narrator
 from goodreads_normalizer.models.author import Author
-from goodreads_normalizer.data.known_en_authors import KNOWN_AUTHORS
-from goodreads_normalizer.data.known_en_narrators import KNOWN_NARRATORS
-from goodreads_normalizer.data.known_translators import TRANSLATORS
+from goodreads_normalizer.data import AUTHORS
+from goodreads_normalizer.data import NARRATORS
+from goodreads_normalizer.data import TRANSLATORS
 from goodreads_normalizer.normalize.author_narrator import normalize_author_name
 from goodreads_normalizer.parsers.author_narrator import parse_additional_author
 
@@ -46,10 +46,10 @@ def transform_author_additional_authors(
                     narrators.append(Narrator(name=name))
                 # if name is a known author and they are the first name in the additional_authors they are an author?
                 elif (
-                    name in KNOWN_AUTHORS and name not in KNOWN_NARRATORS
+                    name in AUTHORS and name not in NARRATORS
                 ) and additional_authors.index(name) == 0:
                     authors.append(Author(name=name))
-                elif name in KNOWN_NARRATORS:
+                elif name in NARRATORS:
                     narrators.append(Narrator(name=name))
 
     return authors, narrators

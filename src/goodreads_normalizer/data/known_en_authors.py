@@ -1,5 +1,8 @@
+"""
+This is a set of known Authors.
+"""
+
 KNOWN_AUTHORS = {
-    "R.C. Bray",
     "Stephen Pacey",
     "Jim Butcher",
     "John Banks",
