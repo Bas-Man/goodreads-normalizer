@@ -17,6 +17,8 @@ dependencies = [
   "ruamel-yaml>=0.19.1",
   "typer>=0.25.1",
 ]
+license = "MIT"
+license-files = ["LICENSE"]
 
 classifiers = [
     "Programming Language :: Python :: 3",
