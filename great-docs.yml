@@ -92,6 +92,10 @@ reference:
 # .well-known/ discovery, and sitemaps.
 site_url: "https://bas-man.github.io/goodreads-normalizer/"
 
+seo:
+  canonical:
+    base_url: "https://bas-man.github.io/goodreads-normalizer/"
+
 # Site Settings
 # -------------
 # site:
