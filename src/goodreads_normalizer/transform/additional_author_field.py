@@ -16,6 +16,7 @@ def transform_author_additional_authors(
     This function uses the csv fields "Author", "Additional Authors" and "Binding" to create
     Author and Narrator objects.
     Translators and Editors are ignored if it can be determined.
+
     Args:
         author_field (str):
         additional_author_field (str):
@@ -44,7 +45,7 @@ def transform_author_additional_authors(
                 # If Author name is in both Author and Additional_authors, then author narrated their own book
                 elif name == authors[0].name:
                     narrators.append(Narrator(name=name))
-                # if name is a known author and they are the first name in the additional_authors they are an author?
+                # if name is a known author, and they are the first name in the additional_authors they are an author?
                 elif (
                     name in AUTHORS and name not in NARRATORS
                 ) and additional_authors.index(name) == 0:

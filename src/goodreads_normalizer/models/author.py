@@ -15,12 +15,10 @@ from typing import Self
 class Author(BaseModel):
     """
     This object stores the information about an author.
-    The Author may have a non de plume.
-
-    Args:
-        name (str):
+    The Author may have a nom de plume.
 
     Attributes:
+        name (str):
         pen_name (str): Author's Nom de plume
 
     Examples:
@@ -120,6 +118,18 @@ class Author(BaseModel):
             if self._first_name
             else self._last_name
         ).strip()
+
+    @computed_field
+    @property
+    def is_pen_name(self) -> bool:
+        return self.pen_name is not None
+
+    @computed_field
+    @property
+    def real_name(self) -> str:
+        if self.pen_name:
+            return self.name
+        return self.name
 
     @computed_field
     @property

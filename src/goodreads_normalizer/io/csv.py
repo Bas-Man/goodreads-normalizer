@@ -33,7 +33,7 @@ def load_csv(file_path: Path) -> list[Book]:
         file_path: GoodReads source csv file
 
     Returns:
-        list[Book]: A list of Book models
+        list[Book]:
 
     Raises:
         GoodreadsImportError: If there is an issue reading the csv source data
