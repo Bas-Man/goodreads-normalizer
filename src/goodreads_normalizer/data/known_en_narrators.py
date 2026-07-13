@@ -39,7 +39,6 @@ KNOWN_NARRATORS = {
     "Jon Foster",
     "Jonathan Davis",
     "Joshua Jackson",
-    "Joshua Mason",
     "Kate Reading",
     "Kevin Hanchard",
     "Krysten Ritter",
