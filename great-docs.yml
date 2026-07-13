@@ -90,7 +90,7 @@ reference:
 # Canonical address of the deployed documentation site.
 # Required for subdirectory deployments, skills page install commands,
 # .well-known/ discovery, and sitemaps.
-# site_url: "https://your-org.github.io/your-package/"
+site_url: "https://bas-man.github.io/goodreads-normalizer/"
 
 # Site Settings
 # -------------
@@ -114,3 +114,8 @@ cli:
   enabled: true              # Enable CLI documentation
   module: goodreads_normalizer.cli.main     # Module containing Click commands
   name:  click_app                 # Name of the Click command object
+
+versions:
+  - label: "0.1.0"
+    tag: "0.1.0"
+    latest: true
