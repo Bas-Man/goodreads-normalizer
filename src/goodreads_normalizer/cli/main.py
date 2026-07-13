@@ -44,8 +44,10 @@ def main(
 ):
     """Cleans, normalizes, and rewrites a Goodreads CSV export.
 
-    Reads a Goodreads CSV export, applies name-formatting rules, and
+    Reads a Goodreads CSV export, applies various normalization rules, and
     writes the normalized result to the given output.
+
+    See [Book](`goodreads_normalizer.Book`) for more details on normalization.
 
     \b
     Examples:

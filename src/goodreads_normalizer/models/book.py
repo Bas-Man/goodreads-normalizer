@@ -22,6 +22,30 @@ from goodreads_normalizer.transform.books import transform_book_title
 class Book(BaseModel):
     """
     This model stores all row data read from goodreads_export.csv file
+
+    Attributes:
+        book_id (str):
+        title_data (BookTitleData):
+        authors (list[Author]):
+        narrators (list[Narrator]):
+        isbn (str|None):
+        isbn13 (str|None):
+        rating (int):
+        publisher (str):
+        binding (str):
+        pages (int):
+        year_published (str):
+        original_publication_year (str):
+        date_read (datetime.date):
+        date_added (datetime.date):
+        book_shelves (list[str]):
+        book_shelves_with_positions (list[str]):
+        exclusive_shelf (str):
+        my_review (str):
+        spoiler (str):
+        private_notes (str):
+        read_count (int):
+        owned_copies (int):
     """
 
     book_id: str
@@ -96,9 +120,6 @@ class Book(BaseModel):
 
         Args:
             shelves (str):
-
-        Returns:
-            list[str]: The list of shelves associated with this book
         """
         if shelves is None or len(shelves) == 0:
             return []
@@ -128,8 +149,6 @@ class Book(BaseModel):
     def title(self) -> str:
         """
         Gives the title of the book, excluding series name and position
-
-        Returns: Normalized title of the book
         """
         return self.title_data.title
 
@@ -138,8 +157,6 @@ class Book(BaseModel):
     def original_title(self) -> str:
         """
         Gives the original book title with additional spaces removed.
-
-        Returns: Original title of the book
         """
         return self.title_data.original_title
 
@@ -147,9 +164,7 @@ class Book(BaseModel):
     @property
     def series(self) -> list[Series]:
         """
-        Gives access to the Series Object
-
-        Returns: Series Object
+        Gives access to the Series Model
         """
         return self.title_data.series
 
@@ -159,9 +174,6 @@ class Book(BaseModel):
         """
         This is True if the book belongs to more than a single series.
         Example: "Cleaning the Gold" Belongs to both "Will Trent" and "Jack Reacher"
-
-        Returns:
-            bool:
         """
         return self.title_data.is_a_crossover
 
@@ -172,9 +184,6 @@ class Book(BaseModel):
         This is True if the book is a collection containing more than one book from a single series
 
         Note: Does not work for collection with multiple authors
-
-        Returns:
-            bool:
         """
         return self.title_data.is_collection
 
@@ -183,9 +192,6 @@ class Book(BaseModel):
     def is_single_book(self) -> bool:
         """
         This is True if the book is part of a single series and is not a collection.
-
-        Returns:
-            bool:
         """
         return (
             len(self.title_data.series) == 1

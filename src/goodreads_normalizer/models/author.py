@@ -17,13 +17,29 @@ class Author(BaseModel):
     This object stores the information about an author.
     The Author may have a non de plume.
 
+    Args:
+        name (str):
+
     Attributes:
-        name: The Author's full name
+        pen_name (str): Author's Nom de plume
 
     Examples:
-        Author(name="Brandon Sanderson")
+        ```{python}
+        from goodreads_normalizer import Author
 
-    If the Author name is in the KNOWN_NARRATORS list and is also *not* in the KNOWN_EN_AUTHORS list,
+        author = Author(name="Brandon Sanderson")
+        print(f"Author: {author.display_name}")
+        print(f"Slug: {author.slug}")
+
+        author = Author(name="Shirtaloon")
+        print(f"Display Name: {author.display_name}")
+        print(f"Is Pen Name: {author.is_pen_name}")
+        print(f"Slug: {author.slug}")
+        print(f"Pen Name: {author.pen_name}")
+        print(f"Name: {author.name}")
+        ```
+
+    If the Author name is in the NARRATORS list and is also *not* in the AUTHORS list,
     a ValueError will be raised, which is then transformed into a ValidationError by pydantic.
     """
 

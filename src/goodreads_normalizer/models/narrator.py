@@ -24,8 +24,13 @@ class Narrator(BaseModel):
         name: The full name of the narrator.
 
     Examples:
-        ```python
-        Narrator(name="Travis Baldree")
+        ```{python}
+        from goodreads_normalizer import Narrator
+
+        narrator = Narrator(name="Travis Baldree")
+        print(f"Narrator Name: {narrator.full_name}")
+        print(f"Narrator Name (N): {narrator.name_with_short_tag}")
+        print(f"Narrator Name (Narrator): {narrator.name_with_long_tag}")
         ```
 
     """
@@ -73,7 +78,7 @@ class Narrator(BaseModel):
     @property
     def slug(self) -> str:
         """
-        Gives a http save slug based on the narrator's full name. lastname-firstname
+        Gives an http safe slug based on the narrator's full name. lastname-firstname
         """
         slug: str = (
             f"{self._last_name}-{self._first_name}"
@@ -105,7 +110,6 @@ class Narrator(BaseModel):
         """
         Checks that the name appear to be a Translator or Editor.
         I expect this will need some refactoring
-        Returns:
 
         """
         if "- editor" in self.name.lower():
