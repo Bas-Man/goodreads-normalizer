@@ -27,6 +27,13 @@ classifiers = [
     "Programming Language :: Python :: 3.14",
 ]
 
+[project.urls]
+Repository = "https://github.com/Bas-Man/goodreads-normalizer"
+Issues = "https://github.com/Bas-Man/goodreads-normalizer/issues"
+Documentation = "https://bas-man.github.io/goodreads-normalizer"
+Changelog = "https://github.com/Bas-Man/goodreads-normalizer/blob/main/CHANGELOG.md"
+License = "https://github.com/Bas-Man/goodreads-normalizer/blob/main/LICENSE"
+
 [project.scripts]
 normalize-goodreads = "goodreads_normalizer.cli.main:app"
 
