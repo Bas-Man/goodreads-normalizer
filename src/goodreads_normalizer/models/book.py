@@ -21,7 +21,16 @@ from goodreads_normalizer.transform.books import transform_book_title
 
 class Book(BaseModel):
     """
-    This model stores all row data read from goodreads_export.csv file
+    This model stores all row data read from goodreads_export.csv file.
+    As part of the book model creation. Validation and normalization is performed.
+
+    BookTitleData:
+
+        original_title (str):
+
+        title (str): Book title only
+
+        series (list[Series]): Series data for current Book.
 
     Attributes:
         book_id (str):
