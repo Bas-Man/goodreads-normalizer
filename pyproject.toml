@@ -42,8 +42,15 @@ exclude = [
 ]
 
 [dependency-groups]
-dev = ["mypy>=2.1.0", "pytest>=9.0.3", "pytest-cov>=7.1.0", "ruff>=0.15.14", "tox>=4",
-  "tox-uv>=1"]
+dev = [
+    "mypy>=2.1.0",
+    "pytest>=9.0.3",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.15.14",
+    "tox>=4",
+    "tox-uv>=1",
+    "twine>=6.2.0",
+]
 
 #docs = [
 #    "sphinx>=8.0",
