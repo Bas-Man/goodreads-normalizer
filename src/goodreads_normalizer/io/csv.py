@@ -126,7 +126,9 @@ def export_to_stream(
     ]
 
     # Notice we DO NOT use 'with open()' here because Typer handles the stream lifecycle
-    writer = csv.DictWriter(stream, fieldnames=headers)
+    writer = csv.DictWriter(
+        stream, fieldnames=headers, delimiter=",", dialect="excel", lineterminator="\n"
+    )
     writer.writeheader()
 
     for book in books:
