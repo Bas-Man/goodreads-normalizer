@@ -1,0 +1,112 @@
+name: Name normalization
+description: Submit a new or corrected name mapping for Goodreads data.
+title: "[Name] "
+labels:
+  - data
+  - normalization
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve the Goodreads Normalizer project!
+
+        Please complete as much information as possible. Every submission is reviewed before being added.
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Name type
+      description: What type of name are you submitting?
+      options:
+        - Author
+        - Narrator
+        - Editor
+        - Translator
+        - Illustrator
+        - Compiler
+        - Contributor
+        - Publisher
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: incorrect_name
+    attributes:
+      label: Goodreads name
+      description: Enter the name exactly as it appears on Goodreads.
+      placeholder: King, Stephen
+    validations:
+      required: true
+
+  - type: input
+    id: canonical_name
+    attributes:
+      label: Correct canonical name
+      description: Enter the preferred normalized form.
+      placeholder: Stephen King
+    validations:
+      required: true
+
+  - type: input
+    id: alternate_names
+    attributes:
+      label: Other known spellings (optional)
+      description: Separate multiple values with commas.
+      placeholder: Stephen Edwin King, S. King
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: |
+        Please explain why this normalization is correct.
+
+        Helpful sources include:
+        • Official author website
+        • Publisher page
+        • Library of Congress
+        • Open Library
+        • ISNI
+        • VIAF
+        • Wikipedia
+      placeholder: |
+        Goodreads shows:
+        King, Stephen
+
+        Official website uses:
+        Stephen King
+
+    validations:
+      required: true
+
+  - type: input
+    id: goodreads_url
+    attributes:
+      label: Goodreads page (optional)
+      placeholder: https://www.goodreads.com/author/show/...
+
+  - type: input
+    id: source_url
+    attributes:
+      label: Supporting source URL (optional)
+      placeholder: https://...
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional notes
+      description: Anything else that may help review this submission.
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I searched existing issues before submitting.
+          required: true
+        - label: The Goodreads name is copied exactly as displayed.
+          required: true
+        - label: The canonical name is supported by a reliable source.
+          required: true
