@@ -17,6 +17,7 @@ from goodreads_normalizer.transform.additional_author_field import (
     transform_author_additional_authors,
 )
 from goodreads_normalizer.transform.books import transform_book_title
+from typing import Self
 
 
 class Book(BaseModel):
@@ -153,6 +154,117 @@ class Book(BaseModel):
         if shelf is None or shelf == "unable-to-finish":
             return 0
         return read_count
+
+    @classmethod
+    def create(
+        cls,
+        *,
+        book_id: str,
+        title: str,
+        author: str | None = None,
+        additional_authors: str | None = None,
+        authors: list[Author] | list[str] | None = None,
+        narrators: list[Narrator] | list[str] | None = None,
+        isbn: str | None = None,
+        isbn13: str | None = None,
+        rating: int = 0,
+        publisher: str = "",
+        binding: str = "",
+        pages: int = 0,
+        year_published: str = "",
+        original_publication_year: str = "",
+        date_read: datetime.date | None = None,
+        date_added: datetime.date | None = None,
+        book_shelves: list[str] | None = None,
+        book_shelves_with_positions: list[str] | None = None,
+        exclusive_shelf: str = "to-read",
+        my_review: str = "",
+        spoiler: str = "",
+        private_notes: str = "",
+        read_count: int = 0,
+        owned_copies: int = 1,
+    ) -> Self:
+        """
+        Friendly factory for building a Book from ordinary Python values.
+
+        Two ways to supply author/narrator data:
+
+        1. Manual (authors=/narrators=): you've already decided who's an
+           author and who's a narrator. Skips the CSV-style split logic.
+        2. CSV-style (author=/additional_authors=): reproduces the exact
+           same transform_author_additional_authors() split the Goodreads
+           CSV path uses, based on `binding` (e.g. narrators get pulled
+           out of "Additional Authors" for audiobook bindings).
+
+        Mixing the two is not allowed — pick one.
+
+        ```{python}
+        from goodreads_normalizer import Book
+
+        book = Book.create(book_id="123", title="He Who Fights with Monsters 12 (He Who Fights with Monsters #12)", author="Shirtaloon")
+        print(f"Book Title: {book.title}")
+        print(f"Series List: {book.series}")
+        print(f"Author: {book.authors}")
+
+        book2 = Book.create(book_id="456", title="Cleaning the Gold (Will Trent, #8.5; Jack Reacher, #23.6)",
+                            authors=["Karin Slaughter", "Lee Child"])
+        print(f"Book Title: {book2.title}")
+        print(f"Author List: {book2.authors}")
+        print(f"Series List: {book2.series}")
+        ```
+        """
+        if (authors is not None or narrators is not None) and (
+            author is not None or additional_authors is not None
+        ):
+            raise ValueError(
+                "Provide either authors=/narrators= (manual) or "
+                "author=/additional_authors= (CSV-style split), not both."
+            )
+
+        data: dict = {
+            "book_id": book_id,
+            "title_data": title,
+            "isbn": isbn or "",
+            "isbn13": isbn13 or "",
+            "rating": rating,
+            "publisher": publisher,
+            "binding": binding,
+            "pages": pages,
+            "year_published": year_published,
+            "original_publication_year": original_publication_year,
+            "date_read": date_read,
+            "date_added": date_added,
+            "book_shelves": ", ".join(book_shelves) if book_shelves else "",
+            "book_shelves_with_positions": (
+                ", ".join(book_shelves_with_positions)
+                if book_shelves_with_positions
+                else ""
+            ),
+            "exclusive_shelf": exclusive_shelf,
+            "my_review": my_review,
+            "spoiler": spoiler,
+            "private_notes": private_notes,
+            "read_count": read_count,
+            "owned_copies": owned_copies,
+        }
+
+        if author is not None or additional_authors is not None:
+            # CSV-style: let _build_authors_narrators run the normal
+            # transform_author_additional_authors split, same as a real row.
+            data["Author"] = author or ""
+            data["Additional Authors"] = additional_authors or ""
+            data["Binding"] = binding
+        else:
+            # Manual: caller has already decided authors vs narrators.
+            data["authors"] = [
+                a if isinstance(a, Author) else Author(name=a) for a in (authors or [])
+            ]
+            data["narrators"] = [
+                n if isinstance(n, Narrator) else Narrator(name=n)
+                for n in (narrators or [])
+            ]
+
+        return cls.model_validate(data)
 
     @computed_field
     @property
