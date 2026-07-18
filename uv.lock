@@ -641,7 +641,6 @@ name = "goodreads-normalizer"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
-    { name = "black" },
     { name = "httpx" },
     { name = "isbnlib" },
     { name = "pydantic" },
@@ -655,6 +654,7 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
+    { name = "black" },
     { name = "mypy" },
     { name = "pytest" },
     { name = "pytest-cov" },
@@ -669,7 +669,6 @@ great-docs = [
 
 [package.metadata]
 requires-dist = [
-    { name = "black", specifier = ">=26.5.1" },
     { name = "httpx", specifier = ">=0.28.1" },
     { name = "isbnlib", specifier = ">=3.10.14" },
     { name = "pydantic", specifier = ">=2.13.4" },
@@ -683,6 +682,7 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "black", specifier = ">=26.5.1" },
     { name = "mypy", specifier = ">=2.1.0" },
     { name = "pytest", specifier = ">=9.0.3" },
     { name = "pytest-cov", specifier = ">=7.1.0" },

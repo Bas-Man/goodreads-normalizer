@@ -1,12 +1,11 @@
 [project]
 name = "goodreads-normalizer"
 version = "0.1.0"
-description = "Add your description here"
+description = "Normalize Goodreads CSV exports by cleaning author, narrator, series, and title metadata."
 readme = "README.md"
 authors = [{ name = "Adam.S", email = "Bas-Man@users.noreply.github.com" }]
 requires-python = ">=3.12"
 dependencies = [
-  "black>=26.5.1",
   "httpx>=0.28.1",
   "isbnlib>=3.10.14",
   "pydantic>=2.13.4",
@@ -50,6 +49,7 @@ exclude = [
 
 [dependency-groups]
 dev = [
+    "black>=26.5.1",
     "mypy>=2.1.0",
     "pytest>=9.0.3",
     "pytest-cov>=7.1.0",
