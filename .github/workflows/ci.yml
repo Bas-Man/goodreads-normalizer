@@ -16,9 +16,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  test:
-    name: Python ${{ matrix.python-version }}
+  quality:
+    name: Quality (Python ${{ matrix.python-version }})
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     strategy:
       matrix:
@@ -41,23 +42,25 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install dependencies
+      - name: Install project dependencies
         run: uv sync --locked
 
-      - name: Lint
+      - name: Run Ruff linter
         run: uv run ruff check src tests
 
-      - name: Check formatting
+      - name: Check Ruff formatting
         run: uv run ruff format --check src tests
 
-      - name: Type check
+      - name: Run mypy
         run: uv run mypy src/goodreads_normalizer
 
-      - name: Run tests
+      - name: Run pytest
         run: uv run pytest
 
-      - name: Build package
-        run: uv build
+      - name: Build wheel and source distribution
+        run: |
+          rm -rf dist
+          uv build
 
       - name: Validate distributions
         run: uv run twine check dist/*
@@ -67,5 +70,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: python-dist
-          path: dist/
+          path: |
+            dist/*.whl
+            dist/*.tar.gz
           retention-days: 14
