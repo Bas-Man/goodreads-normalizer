@@ -1,5 +1,12 @@
 # Goodreads Normalizer
 
+[![CI](https://github.com/Bas-Man/goodreads-normalizer/actions/workflows/ci.yml/badge.svg?branch=dev)](https://github.com/Bas-Man/goodreads-normalizer/actions/workflows/ci.yml)
+[![Documentation](https://github.com/Bas-Man/goodreads-normalizer/actions/workflows/docs.yml/badge.svg?branch=main)](https://github.com/Bas-Man/goodreads-normalizer/actions/workflows/docs.yml)
+<!--[![Documentation](https://img.shields.io/badge/docs-online-blue)](https://bas-man.github.io/goodreads-normalizer)-->
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![PyPI](https://img.shields.io/pypi/v/goodreads-normalizer)](https://pypi.org/project/goodreads-normalizer/)
+[![Python](https://img.shields.io/pypi/pyversions/goodreads-normalizer)](https://pypi.org/project/goodreads-normalizer/)
+
 A Python library and command-line application for cleaning, validating, and normalizing Goodreads library exports.
 
 Goodreads exports are an excellent way to back up your library, but the exported data is often inconsistent. Author names, series information, ISBNs, dates, shelves, and other metadata can vary significantly, making it difficult to analyse, migrate, or integrate with other cataloguing systems.
@@ -60,9 +67,9 @@ uv add goodreads-normalizer
 
 ---
 
-## Command Line Usage
+## Quick Start
 
-Normalize a Goodreads export:
+Export your Goodreads library as a CSV file from Goodreads, then normalize it with a single command:
 
 ```bash
 goodreads-normalizer \
@@ -70,18 +77,32 @@ goodreads-normalizer \
     --output normalized.csv
 ```
 
-or
+This command:
+
+- Reads the Goodreads export.
+- Validates and normalizes the book metadata.
+- Writes the normalized records to `normalized.csv`.
+- Leaves the original export unchanged.
+
+> **Tip:** Keep your original Goodreads export as a backup. The normalized CSV is intended for further processing, analysis, or import into other cataloguing tools.
+
+---
+
+## Command Line Usage
+
+The example above uses the long option names for clarity. Once you're familiar with the tool, the equivalent short form is:
 
 ```bash
-goodreads-normalizer -f goodreads_export.csv -o normalized.csv
+goodreads-normalizer \
+    -f goodreads_export.csv \
+    -o normalized.csv
 ```
 
-Display help:
+To see all available options:
 
 ```bash
 goodreads-normalizer --help
 ```
-
 ---
 
 ## What Gets Normalized?
