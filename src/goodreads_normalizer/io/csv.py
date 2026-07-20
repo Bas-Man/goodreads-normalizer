@@ -4,7 +4,9 @@ from pathlib import Path
 
 from typer import FileTextWrite
 
-from goodreads_normalizer import Author, Book, Narrator
+from goodreads_normalizer.models.author import Author
+from goodreads_normalizer.models.book import Book
+from goodreads_normalizer.models.narrator import Narrator
 from goodreads_normalizer.parsers.goodreads_csv import parse_goodreads_csv
 
 
