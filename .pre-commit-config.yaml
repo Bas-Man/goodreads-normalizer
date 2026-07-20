@@ -8,12 +8,6 @@ repos:
       - id: check-added-large-files # Prevents committing massive files
       - id: check-ast # Validates Python abstract syntax trees
 
-# Keeps your uv.lock file synced and updated
-  - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.11.29
-    hooks:
-      - id: uv-lock
-
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.15.21
     hooks:

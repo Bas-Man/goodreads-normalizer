@@ -20,10 +20,26 @@ license = "MIT"
 license-files = ["LICENSE"]
 
 classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: End Users/Desktop",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
+
+    "Topic :: Utilities",
+]
+
+keywords = [
+    "goodreads",
+    "books",
+    "csv",
+    "metadata",
+    "normalization",
 ]
 
 [project.urls]
@@ -50,6 +66,7 @@ exclude = [
 [dependency-groups]
 dev = [
     "mypy>=2.1.0",
+    "pre-commit>=4.6.0",
     "pytest>=9.0.3",
     "pytest-cov>=7.1.0",
     "ruff>=0.15.14",
