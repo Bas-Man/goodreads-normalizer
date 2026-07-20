@@ -49,7 +49,6 @@ exclude = [
 
 [dependency-groups]
 dev = [
-    "black>=26.5.1",
     "mypy>=2.1.0",
     "pytest>=9.0.3",
     "pytest-cov>=7.1.0",
@@ -69,6 +68,25 @@ great-docs = ["great-docs"]
 
 [tool.ruff]
 line-length = 88
+target-version = "py312"
+
+exclude = [
+    ".git",
+    ".github",
+    ".tox",
+    ".venv",
+    "build",
+    "dist",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "I",
+    "UP",
+    "B",
+]
 
 [tool.mypy]
 disable_error_code = ["prop-decorator"]

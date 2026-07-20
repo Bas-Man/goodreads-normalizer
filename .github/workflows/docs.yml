@@ -24,8 +24,7 @@ jobs:
 
       - name: Install package and dependencies
         run: |
-          uv sync
-          uv sync --group great-docs
+          uv sync --locked --group great-docs
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
