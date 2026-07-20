@@ -20,7 +20,7 @@ Goodreads exports are an excellent way to back up your library, but the exported
 - 📚 Read Goodreads CSV exports
 - ✨ Normalize author names
 - 👤 Validate author metadata
-- 📝 Normalize editors, translators, and narrators
+- 📝 Normalize audiobook narrator information
 - 📖 Parse and normalize series information
 - 🔢 Normalize ISBN values
 - 📅 Consistent date handling
@@ -38,8 +38,7 @@ Goodreads has existed for many years, and its export format reflects that histor
 Some common issues include:
 
 - inconsistent author names
-- editors included as authors
-- translators stored inconsistently
+- additional contributor information stored inconsistently
 - multiple spellings of the same person
 - incomplete or malformed series data
 - inconsistent ISBN formatting
@@ -103,74 +102,104 @@ To see all available options:
 ```bash
 goodreads-normalizer --help
 ```
+
+---
+
+## Library Usage
+
+In addition to the command-line interface, Goodreads Normalizer can be used as a Python library.
+
+The `load_csv()` function reads a Goodreads export and returns a list of validated `Book` models.
+
+```python
+from goodreads_normalizer import load_csv
+
+books = load_csv("goodreads_export.csv")
+
+for book in books:
+    print(book.title)
+    print(book.authors)
+    print(book.series)
+```
+
+Each `Book` is a fully validated Pydantic model. During model creation, Goodreads data is parsed and normalized automatically, including:
+
+- author information
+- narrator information
+- book titles and series metadata
+- ISBN values
+- dates
+- shelves
+- numeric fields
+
+Advanced users may also construct models directly when working with structured data.
+
+```python
+from goodreads_normalizer import Book
+
+book = Book(
+    book_id="123456",
+    # ... remaining fields omitted for brevity
+)
+```
+
+The package also exposes the core models for applications that need to inspect, validate, transform, or export Goodreads data programmatically.
+
+```python
+from goodreads_normalizer import (
+    Author,
+    Book,
+    Narrator,
+)
+```
 ---
 
 ## What Gets Normalized?
 
-Current areas include:
+Goodreads exports often contain inconsistent or difficult-to-process metadata. Goodreads Normalizer converts these values into structured, validated models while preserving the original information whenever possible.
 
-- Author names
-- Editors
-- Translators
-- Narrators
-- Series names
-- Series numbers
-- ISBN values
-- Empty values
-- Date parsing
-- Validation
+| Goodreads export                      | Normalized                                                         |
+| ------------------------------------- | ------------------------------------------------------------------ |
+| `King, Stephen`                       | Structured `Author` model                                          |
+| `The Colour of Magic (Discworld, #1)` | `BookTitleData` containing the title and structured `Series` model |
+| `978-1-85723-138-9`                   | Normalized ISBN value                                              |
+| `Fantasy, Owned, Audible`             | `["Fantasy", "Owned", "Audible"]`                                  |
+| `2025/06/01`                          | `datetime.date(2025, 6, 1)`                                        |
+| Empty or missing values               | Appropriate `None` or empty collections                            |
+
+Normalization currently includes:
+
+- author information
+- audiobook narrator information
+- book titles and series metadata
+- ISBN and ISBN-13 values
+- dates
+- shelves
+- numeric fields
+- validation of Goodreads metadata
 
 The project deliberately avoids changing data that cannot be normalized with confidence.
 
 ---
 
-## Development
+## Supported Python Versions
 
-Clone the repository:
+Goodreads Normalizer currently supports:
 
-```bash
-git clone https://github.com/Bas-Man/goodreads-normalizer.git
-cd goodreads-normalizer
-```
+- Python 3.12
+- Python 3.13
+- Python 3.14
 
-Install dependencies:
-
-```bash
-uv sync
-```
-
-To update documentation:
-```bash
-uv sync --group great-docs
-uv run great-docs build
-uv run great-docs preview
-```
-
-Run the test suite:
-
-```bash
-uv run pytest
-```
-
-Run linting:
-
-```bash
-uv run ruff check
-```
-
-Format the code:
-
-```bash
-uv run ruff format
-```
+Support for newer Python releases will be added as they become available and are verified by the continuous integration (CI) workflow.
 
 ---
 
-## Supported Python Versions
+## Documentation
 
-The project supports modern versions of Python.
+The full project documentation includes installation guides, API documentation, usage examples, and design notes.
 
-See `pyproject.toml` for the current minimum supported version.
+The latest documentation is available on the
+[project website](https://bas-man.github.io/goodreads-normalizer/).
 
 ---
 
@@ -189,11 +218,13 @@ The project is designed to provide:
 
 ## Roadmap
 
-Future work includes:
+Planned improvements include:
 
+- editor detection and normalization
+- translator detection and normalization
 - additional author normalization datasets
-- improved editor and translator normalization
-- additional export formats
+- additional import and export formats
+- convenience constructors such as `Book.from_goodreads()`
 
 ---
 
@@ -202,6 +233,66 @@ Future work includes:
 Bug reports, feature requests, and pull requests are welcome.
 
 If you are planning a significant change, please open an issue first so the proposed approach can be discussed.
+
+---
+
+## Development
+
+Clone the repository:
+
+```bash
+git clone https://github.com/Bas-Man/goodreads-normalizer.git
+cd goodreads-normalizer
+```
+
+Install the project and development dependencies:
+
+```bash
+uv sync --locked
+```
+
+Install the Git hooks:
+
+```bash
+uv run pre-commit install
+```
+
+Run the same quality checks performed by the continuous integration (CI) workflow:
+
+```bash
+uv run ruff check src tests
+uv run ruff format --check src tests
+uv run mypy src/goodreads_normalizer
+uv run pytest
+uv build
+uv run twine check dist/*
+```
+
+### Documentation
+
+Documentation is built using **Great Docs**, which depends on **Quarto**.
+
+Before building the documentation, install Quarto by following the instructions at:
+
+https://quarto.org/docs/get-started/
+
+Then install the documentation dependencies:
+
+```bash
+uv sync --group great-docs
+```
+
+Build the documentation:
+
+```bash
+uv run great-docs build
+```
+
+Preview the documentation locally:
+
+```bash
+uv run great-docs preview
+```
 
 ---
 
@@ -223,7 +314,3 @@ This project would not be possible without the availability of Goodreads library
 This project is an independent utility and is not affiliated with Goodreads or Amazon.
 
 Users are responsible for ensuring they have the right to process any data used with this software.
-
-## License
-
-MIT
