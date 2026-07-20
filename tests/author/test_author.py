@@ -1,5 +1,6 @@
-from goodreads_normalizer.models.author import Author
 import pytest
+
+from goodreads_normalizer.models.author import Author
 
 TEST_VALID_AUTHORS = [
     ("Jim Butcher", "Jim Butcher", "Jim", "Butcher", None, "butcher-jim"),

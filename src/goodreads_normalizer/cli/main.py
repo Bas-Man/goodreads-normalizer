@@ -1,11 +1,12 @@
 from pathlib import Path
+
 import typer
 
 from goodreads_normalizer.io.csv import (
     GoodreadsImportError,
-    load_csv,
-    export_to_stream,
     NameFormatter,
+    export_to_stream,
+    load_csv,
 )
 
 app = typer.Typer(help="Goodreads CSV Cleaner and Formatter CLI")

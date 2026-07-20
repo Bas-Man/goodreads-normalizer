@@ -1,9 +1,10 @@
+import pytest
+
 from goodreads_normalizer.models.author import Author
 from goodreads_normalizer.models.narrator import Narrator
 from goodreads_normalizer.transform.additional_author_field import (
     transform_author_additional_authors,
 )
-import pytest
 
 TEST_DATA = [
     (

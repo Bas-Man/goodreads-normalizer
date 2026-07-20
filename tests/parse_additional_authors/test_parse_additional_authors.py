@@ -1,5 +1,6 @@
-from goodreads_normalizer.parsers.author_narrator import parse_additional_author
 import pytest
+
+from goodreads_normalizer.parsers.author_narrator import parse_additional_author
 
 NARRATORS = [
     ("Travis Baltree, Lee lu (Translator)", ["Travis Baltree"]),

@@ -14,7 +14,9 @@ edge_tts_narrators = {
     "en-IN-PrabhatNeural",
 }
 
-# Standard, WaveNet, and Neural2 English voice codes for programmatic narration
+"""
+ Standard, WaveNet, and Neural2 English voice codes for programmatic narration
+"""
 google_tts_narrators = {
     "en-US-Neural2-A",
     "en-US-Neural2-C",
@@ -34,6 +36,8 @@ google_tts_narrators = {
     "en-IN-WaveNet-A",
 }
 
-# Note: You can fetch the live list dynamically using the google-cloud-texttospeech library:
-# client = texttospeech.TextToSpeechClient()
-# voices = client.list_voices(language_code="en")
+"""
+ Note: You can fetch the live list dynamically using the google-cloud-texttospeech library:
+ client = texttospeech.TextToSpeechClient()
+ voices = client.list_voices(language_code="en")
+"""

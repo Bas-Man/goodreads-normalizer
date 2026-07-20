@@ -4,21 +4,24 @@
 # File: narrator.py
 """
 
+from typing import Self
+
 from pydantic import (
     BaseModel,
-    model_validator,
+    PrivateAttr,
     computed_field,
     field_validator,
-    PrivateAttr,
+    model_validator,
 )
-from goodreads_normalizer.parsers.regex_patterns import AUTHOR_NAME
+
 from goodreads_normalizer.normalize.author_narrator import normalize_author_name
-from typing import Self
+from goodreads_normalizer.parsers.regex_patterns import AUTHOR_NAME
 
 
 class Narrator(BaseModel):
     """
-    The Narrator model stores information about a narrator found in the "Additional Authors" column
+    The Narrator model stores information about a narrator found in the
+    "Additional Authors" column
 
     Attributes:
         name: The full name of the narrator.

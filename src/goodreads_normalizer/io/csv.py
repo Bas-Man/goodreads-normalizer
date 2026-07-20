@@ -1,14 +1,14 @@
-from enum import Enum
+import csv
+from enum import StrEnum
 from pathlib import Path
 
-from goodreads_normalizer import Book, Author, Narrator
-from goodreads_normalizer.parsers.goodreads_csv import parse_goodreads_csv
-
-import csv
 from typer import FileTextWrite
 
+from goodreads_normalizer import Author, Book, Narrator
+from goodreads_normalizer.parsers.goodreads_csv import parse_goodreads_csv
 
-class NameFormatter(str, Enum):
+
+class NameFormatter(StrEnum):
     """
     This Enum helps control the formatting of Narrator names.
 
@@ -39,7 +39,7 @@ def load_csv(file_path: Path) -> list[Book]:
         GoodreadsImportError: If there is an issue reading the csv source data
     """
     try:
-        with open(file_path, mode="r", encoding="utf-8") as file:
+        with open(file_path, encoding="utf-8") as file:
             return parse_goodreads_csv(file)
 
     except FileNotFoundError as e:
@@ -54,7 +54,7 @@ def load_csv(file_path: Path) -> list[Book]:
             "Make sure the file isn't open in Excel or locked by another app."
         ) from e
 
-    except (OSError, IOError) as e:
+    except OSError as e:
         raise GoodreadsImportError(
             f"Fatal Error: A system error occurred while reading '{file_path}': {e}"
         ) from e

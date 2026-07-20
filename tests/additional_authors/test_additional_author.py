@@ -1,5 +1,6 @@
-from goodreads_normalizer.models.narrator import Narrator
 import pytest
+
+from goodreads_normalizer.models.narrator import Narrator
 
 TEST_LIST = [
     (

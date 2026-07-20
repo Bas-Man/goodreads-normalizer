@@ -1,7 +1,7 @@
-from goodreads_normalizer.models.book_title import Series, BookTitleData
-from goodreads_normalizer.parsers.book_title import parse_title
-
 import pytest
+
+from goodreads_normalizer.models.book_title import BookTitleData, Series
+from goodreads_normalizer.parsers.book_title import parse_title
 
 """
 Test data for RULE_3: This tests the case where titles contain ":" also supports "#1-3" in title.

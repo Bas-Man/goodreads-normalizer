@@ -33,7 +33,8 @@ class BookTitleData(BaseModel):
     @property
     def is_a_crossover(self) -> bool:
         """
-        Check if the book belongs to more than one series. E.G: Will Trent and Jack Reacher
+        Check if the book belongs to more than one series. E.G: Will Trent and Jack
+        Reacher
         """
         return len(self.series) > 1
 

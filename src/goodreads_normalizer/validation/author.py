@@ -1,5 +1,4 @@
-from goodreads_normalizer.data import NARRATORS
-from goodreads_normalizer.data import AUTHORS
+from goodreads_normalizer.data import AUTHORS, NARRATORS
 
 
 def validate_author_name(name: str) -> str:

@@ -105,6 +105,12 @@ select = [
     "B",
 ]
 
+ignore = [
+    "B008",
+    "B904",
+    "E501",
+]
+
 [tool.mypy]
 disable_error_code = ["prop-decorator"]
 
@@ -121,7 +127,7 @@ testpaths = ["tests"]
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-tag_format = "$version"
+tag_format = "v$version"
 version_scheme = "semver"
 version_provider = "uv"
 update_changelog_on_bump = true

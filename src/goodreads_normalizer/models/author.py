@@ -4,12 +4,14 @@
 # File: author.py
 """
 
-from pydantic import BaseModel, computed_field, model_validator, PrivateAttr
-from goodreads_normalizer.normalize.author_narrator import normalize_author_name
-from goodreads_normalizer.validation.author import validate_author_name
-from goodreads_normalizer.data.known_en_authors import PEN_NAME_TO_NAME
-from goodreads_normalizer.parsers.regex_patterns import AUTHOR_NAME
 from typing import Self
+
+from pydantic import BaseModel, PrivateAttr, computed_field, model_validator
+
+from goodreads_normalizer.data.known_en_authors import PEN_NAME_TO_NAME
+from goodreads_normalizer.normalize.author_narrator import normalize_author_name
+from goodreads_normalizer.parsers.regex_patterns import AUTHOR_NAME
+from goodreads_normalizer.validation.author import validate_author_name
 
 
 class Author(BaseModel):
@@ -38,7 +40,8 @@ class Author(BaseModel):
         ```
 
     If the Author name is in the NARRATORS list and is also *not* in the AUTHORS list,
-    a ValueError will be raised, which is then transformed into a ValidationError by pydantic.
+    a ValueError will be raised, which is then transformed into a ValidationError by
+    pydantic.
     """
 
     name: str = ""

@@ -6,7 +6,7 @@
 
 import datetime
 
-from pydantic import BaseModel, Field, field_validator, model_validator, computed_field
+from pydantic import BaseModel, Field, computed_field, field_validator, model_validator
 from pydantic_core.core_schema import ValidationInfo
 
 from goodreads_normalizer.models.author import Author
@@ -139,7 +139,8 @@ class Book(BaseModel):
     def _adjust_read_count(cls, read_count: int, info: ValidationInfo) -> int:
         """
         If the book is on the "unable-to-finish" shelf, ensure that read_count is 0
-        Goodreads csv export tends to set the read_count to 1 even of the book is not finished
+        Goodreads csv export tends to set the read_count to 1 even of the book is not
+        finished
 
         Args:
             read_count (int):
@@ -190,7 +191,8 @@ class Book(BaseModel):
     @property
     def is_series_collection(self) -> bool:
         """
-        This is True if the book is a collection containing more than one book from a single series
+        This is True if the book is a collection containing more than one book from a
+        single series
 
         Note: Does not work for collection with multiple authors
         """

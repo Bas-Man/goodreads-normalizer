@@ -1,8 +1,6 @@
-from goodreads_normalizer.models.narrator import Narrator
+from goodreads_normalizer.data import AUTHORS, NARRATORS, TRANSLATORS
 from goodreads_normalizer.models.author import Author
-from goodreads_normalizer.data import AUTHORS
-from goodreads_normalizer.data import NARRATORS
-from goodreads_normalizer.data import TRANSLATORS
+from goodreads_normalizer.models.narrator import Narrator
 from goodreads_normalizer.normalize.author_narrator import normalize_author_name
 from goodreads_normalizer.parsers.author_narrator import parse_additional_author
 

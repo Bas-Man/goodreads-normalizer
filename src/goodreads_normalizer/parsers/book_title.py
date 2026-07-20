@@ -1,4 +1,4 @@
-from goodreads_normalizer.models.book_title import Series, BookTitleData
+from goodreads_normalizer.models.book_title import BookTitleData, Series
 from goodreads_normalizer.parsers import regex_patterns
 
 

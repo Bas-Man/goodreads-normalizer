@@ -1,6 +1,6 @@
-from goodreads_normalizer.parsers.book_title import parse_title
-
 import pytest
+
+from goodreads_normalizer.parsers.book_title import parse_title
 
 TEST_TITLES = ["Zero [Paperback] Lustbader Eric V"]
 
