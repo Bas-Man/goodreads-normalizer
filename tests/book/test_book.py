@@ -1,6 +1,7 @@
-from goodreads_normalizer import Book, Author, Narrator
-from goodreads_normalizer.models import Series
 import pytest
+
+from goodreads_normalizer import Author, Book, Narrator
+from goodreads_normalizer.models import Series
 
 TEST_DATA = [
     (
@@ -42,7 +43,7 @@ TEST_DATA_KNOWN_AUTHORS_NARRATORS = [
     (
         "1234",
         "He Who Fights With Monsters 2 (He Who Fights With Monsters #2)",
-        "He Who Fights With Monsters 1",
+        "He Who Fights With Monsters 2",
         [Series(name="He Who Fights With Monsters", numbers=["2"])],
         [Author(name="Shirtaloon")],
         [Narrator(name="Maggie")],
