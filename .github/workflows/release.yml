@@ -6,15 +6,23 @@ on:
       - "v*"
 
 permissions:
-  contents: read
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
-  verify-release-trigger:
+  release:
+    name: Release
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout tagged commit
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - name: Install uv
         uses: astral-sh/setup-uv@v6
@@ -26,9 +34,9 @@ jobs:
         with:
           python-version: "3.14"
 
-      - name: Show release information
+      - name: Install dependencies
+        run: uv sync --locked
+
+      - name: Verify version
         run: |
-          echo "Tag:    ${{ github.ref_name }}"
-          echo "SHA:    ${{ github.sha }}"
-          echo "Ref:    ${{ github.ref }}"
-          echo "Event:  ${{ github.event_name }}"
+          echo "Releasing ${GITHUB_REF_NAME}"
