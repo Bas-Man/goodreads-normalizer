@@ -1,6 +1,6 @@
 [project]
 name = "goodreads-normalizer"
-version = "0.1.1"
+version = "0.1.2"
 description = "Normalize Goodreads CSV exports by cleaning author, narrator, series, and title metadata."
 readme = "README.md"
 authors = [{ name = "Adam.S", email = "Bas-Man@users.noreply.github.com" }]
