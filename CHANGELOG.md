@@ -1,4 +1,11 @@
-## Unreleased
+## v0.1.1 (2026-07-21)
+
+### Fix
+
+- **ruff**: Ruff fixes
+- **ruff**: Fixes requested by ruff
+
+## v0.1.0 (2026-07-15)
 
 ### Feat
 
