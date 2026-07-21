@@ -40,3 +40,16 @@ jobs:
       - name: Verify version
         run: |
           echo "Releasing ${GITHUB_REF_NAME}"
+
+      - name: Build package
+        run: uv build
+
+      - name: Validate distributions
+        run: uv run twine check dist/*
+
+      - name: Upload distribution artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-dist
+          path: dist/
+          retention-days: 14
