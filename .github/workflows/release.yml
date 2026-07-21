@@ -24,24 +24,30 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6
-        with:
-          enable-cache: true
-
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
           python-version: "3.14"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
 
       - name: Install dependencies
         run: uv sync --locked
 
       - name: Verify version
         run: |
-          echo "Releasing ${GITHUB_REF_NAME}"
+          VERSION=$(uv version --short)
+          TAG=${GITHUB_REF_NAME#v}
 
-      - name: Build package
+          echo "Package version: $VERSION"
+          echo "Git tag:         $TAG"
+
+          test "$VERSION" = "$TAG"
+
+      - name: Build Distributions
         run: uv build
 
       - name: Validate distributions
