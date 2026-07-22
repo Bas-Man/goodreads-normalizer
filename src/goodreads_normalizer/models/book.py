@@ -5,6 +5,7 @@
 """
 
 import datetime
+from typing import Self
 
 from pydantic import BaseModel, Field, computed_field, field_validator, model_validator
 from pydantic_core.core_schema import ValidationInfo
@@ -13,11 +14,14 @@ from goodreads_normalizer.models.author import Author
 from goodreads_normalizer.models.book_title import BookTitleData, Series
 from goodreads_normalizer.models.narrator import Narrator
 from goodreads_normalizer.normalize.books import normalize_number
+from goodreads_normalizer.parsers.goodreads_mapper import (
+    GoodreadsBookMapper,
+    GoodreadsRow,
+)
 from goodreads_normalizer.transform.additional_author_field import (
     transform_author_additional_authors,
 )
 from goodreads_normalizer.transform.books import transform_book_title
-from typing import Self
 
 
 class Book(BaseModel):
@@ -154,6 +158,11 @@ class Book(BaseModel):
         if shelf is None or shelf == "unable-to-finish":
             return 0
         return read_count
+
+    @classmethod
+    def from_goodreads(cls, row: GoodreadsRow) -> Self:
+        """Create a Book from a Goodreads export row."""
+        return cls.model_validate(GoodreadsBookMapper.to_book_input(row))
 
     @classmethod
     def create(
