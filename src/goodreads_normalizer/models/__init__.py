@@ -1,7 +1,7 @@
-from .book_title import BookTitleData, Series
-from .book import Book
-from .narrator import Narrator
 from .author import Author
+from .book import Book
+from .book_title import BookTitleData, Series
+from .narrator import Narrator
 
 __all__ = [
     "Book",
