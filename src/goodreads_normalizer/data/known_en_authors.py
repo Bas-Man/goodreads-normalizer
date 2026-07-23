@@ -166,6 +166,7 @@ KNOWN_AUTHORS = {
     "Timothy Zahn",
     "Tom Elliot",
     "Torsten Weitze",
+    "Travis Baldree",
     "Vasily Mahanenko",
     "Warren Murphy",
     "Will Murray",
