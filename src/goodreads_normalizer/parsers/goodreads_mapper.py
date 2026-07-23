@@ -3,7 +3,11 @@
 from collections.abc import Mapping
 from typing import Any
 
-type GoodreadsRow = Mapping[str, Any]
+from goodreads_normalizer.transform.additional_author_field import (
+    transform_author_additional_authors,
+)
+
+type GoodreadsRow = Mapping[str, str]
 type BookInput = dict[str, Any]
 
 
@@ -13,16 +17,23 @@ class GoodreadsBookMapper:
     @staticmethod
     def to_book_input(row: GoodreadsRow) -> BookInput:
         """Return input suitable for Book.model_validate()."""
+        authors, narrators = transform_author_additional_authors(
+            row.get("Author", ""),
+            row.get("Additional Authors", ""),
+            row.get("Binding", ""),
+        )
         return {
             **row,
             "book_id": row["Book Id"],
             "title_data": row["Title"],
+            "authors": authors,
+            "narrators": narrators,
             "isbn": row.get("ISBN", ""),
             "isbn13": row.get("ISBN13", ""),
             "rating": row["My Rating"],
             "publisher": row.get("Publisher", "Unknown"),
             "binding": row["Binding"],
-            "pages": row.get("Pages", 0),
+            "pages": row.get("Pages", ""),
             "year_published": row.get("Year Published", ""),
             "original_publication_year": row.get("Original Publication Year", ""),
             "date_read": row.get("Date Read"),

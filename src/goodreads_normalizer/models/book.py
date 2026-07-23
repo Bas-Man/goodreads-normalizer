@@ -137,7 +137,7 @@ class Book(BaseModel):
         """
         if shelves is None or len(shelves) == 0:
             return []
-        return shelves.split(", ")
+        return [s.strip() for s in shelves.split(",") if s.strip()]
 
     @field_validator("read_count")
     @classmethod
