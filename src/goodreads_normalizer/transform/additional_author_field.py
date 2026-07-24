@@ -1,5 +1,6 @@
 from goodreads_normalizer.data import AUTHORS, NARRATORS, TRANSLATORS
 from goodreads_normalizer.models.author import Author
+from goodreads_normalizer.models.bindings import BindingFormat
 from goodreads_normalizer.models.narrator import Narrator
 from goodreads_normalizer.normalize.author_narrator import normalize_author_name
 from goodreads_normalizer.parsers.author_narrator import parse_additional_author
@@ -26,15 +27,13 @@ def transform_author_additional_authors(
     """
     authors: list[Author] = [Author(name=author_field)]
     narrators: list[Narrator] = []
-    is_audiobook: bool = False
-    if binding is not None:
-        is_audiobook = "audio" in binding.lower()
+    binding_format: BindingFormat = BindingFormat.from_str(binding)
 
     if additional_author_field is not None and additional_author_field != "":
         additional_authors: list[str] = parse_additional_author(additional_author_field)
         for name in additional_authors:
             name = normalize_author_name(name)
-            if not is_audiobook:
+            if not binding_format.is_audiobook:
                 if name not in TRANSLATORS:
                     authors.append(Author(name=name))
             else:
