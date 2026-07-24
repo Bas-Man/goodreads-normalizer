@@ -68,7 +68,7 @@ def main(
         )
         raise typer.Exit(code=1)
     try:
-        typer.echo(f"Reading file: {file_path}")
+        typer.secho(f"Reading file: {file_path}", fg=typer.colors.GREEN, err=True)
         books = load_csv(file_path)
 
     except GoodreadsImportError as err:
@@ -78,15 +78,17 @@ def main(
 
     name_format: NameFormatter = NameFormatter.name
     if short:
-        typer.echo("Applying short formatting rules...")
+        typer.echo("Applying short formatting rules...", err=True)
         name_format = NameFormatter.short
     elif long:
-        typer.echo("Applying long formatting rules...")
+        typer.echo("Applying long formatting rules...", err=True)
         name_format = NameFormatter.long
 
     export_to_stream(books, output, name_format)
 
-    typer.secho(f"Successfully processed {len(books)} books!", fg=typer.colors.GREEN)
+    typer.secho(
+        f"Successfully processed {len(books)} books!", fg=typer.colors.GREEN, err=True
+    )
 
 
 click_app = typer.main.get_command(app)
