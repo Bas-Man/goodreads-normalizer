@@ -8,7 +8,8 @@ class ContributorRole(Flag):
     AUTHOR = auto()
     NARRATOR = auto()
     TRANSLATOR = auto()
-    # EDITOR = auto()
+    EDITOR = auto()
+    ILLUSTRATOR = auto()
 
 
 def classify_person(name: str) -> ContributorRole:
@@ -25,5 +26,8 @@ def classify_person(name: str) -> ContributorRole:
 
     # if name in EDITORS:
     #    role |= ContributorRole.EDITOR
+
+    # if Name in ILLUSTRATORS:
+    #    role |= ContributorRole.ILLUSTRATOR
 
     return role
