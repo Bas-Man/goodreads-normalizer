@@ -1,3 +1,4 @@
+from .illustrators import ILLUSTRATORS
 from .known_en_authors import KNOWN_AUTHORS as AUTHORS
 from .known_en_narrators import KNOWN_NARRATORS
 from .known_translators import TRANSLATORS
@@ -9,4 +10,5 @@ __all__ = [
     "NARRATORS",
     "AUTHORS",
     "TRANSLATORS",
+    "ILLUSTRATORS",
 ]

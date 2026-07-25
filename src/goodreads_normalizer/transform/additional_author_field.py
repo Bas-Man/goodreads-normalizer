@@ -1,4 +1,4 @@
-from goodreads_normalizer.data import AUTHORS, NARRATORS, TRANSLATORS
+from goodreads_normalizer.data import AUTHORS, ILLUSTRATORS, NARRATORS, TRANSLATORS
 from goodreads_normalizer.models.author import Author
 from goodreads_normalizer.models.bindings import BindingFormat
 from goodreads_normalizer.models.narrator import Narrator
@@ -28,6 +28,8 @@ def transform_author_additional_authors(
     authors: list[Author] = [Author(name=author_field)]
     narrators: list[Narrator] = []
     binding_format: BindingFormat = BindingFormat.from_str(binding)
+    # primary_author comes from the "Author" column
+    primary_author: Author = authors[0]
 
     if additional_author_field is not None and additional_author_field != "":
         additional_authors: list[str] = parse_additional_author(additional_author_field)
@@ -39,8 +41,11 @@ def transform_author_additional_authors(
             else:
                 if name in TRANSLATORS:
                     continue
+                elif name in ILLUSTRATORS:
+                    continue
+
                 # If Author name is in both Author and Additional_authors, then author narrated their own book
-                elif name == authors[0].name:
+                elif name == primary_author.name:
                     narrators.append(Narrator(name=name))
                 # if name is a known author, and they are the first name in the additional_authors they are an author?
                 elif (
