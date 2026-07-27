@@ -39,9 +39,7 @@ def transform_author_additional_authors(
                 if name not in TRANSLATORS:
                     authors.append(Author(name=name))
             else:
-                if name in TRANSLATORS:
-                    continue
-                elif name in ILLUSTRATORS:
+                if (name in TRANSLATORS) or (name in ILLUSTRATORS):
                     continue
 
                 # If Author name is in both Author and Additional_authors, then author narrated their own book
