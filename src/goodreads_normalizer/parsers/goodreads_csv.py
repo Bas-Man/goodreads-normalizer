@@ -13,4 +13,10 @@ def parse_goodreads_csv(file_obj) -> list[Book]:
     for row in reader:
         books.append(Book.from_goodreads(row))
 
+    # for row in reader:
+    #    try:
+    #       books.append(Book.from_goodreads(row))
+    #    except Exception:
+    #        print(row)
+    #        raise
     return books
