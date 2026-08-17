@@ -1,13 +1,9 @@
 """Map Goodreads data to Book model input."""
 
-from collections.abc import Mapping
-
+from goodreads_normalizer.data.types import BookInput, GoodreadsRow
 from goodreads_normalizer.transform.additional_author_field import (
     transform_author_additional_authors,
 )
-
-type GoodreadsRow = Mapping[str, str]
-type BookInput = dict[str, object]
 
 
 class GoodreadsBookMapper:
