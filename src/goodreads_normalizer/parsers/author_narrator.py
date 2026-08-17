@@ -23,6 +23,6 @@ def parse_additional_author(additional_author: str) -> list[str]:
             if match.groupdict()["type"]:
                 names.remove(name)
             elif match.groupdict()["narrator"]:
-                names.remove(name)
-                names.append(match.groupdict()["name"])
+                names.remove(name)  # Remove original name with (Narrator)
+                names.append(match.groupdict()["name"])  # Insert the sanitized name
     return names
