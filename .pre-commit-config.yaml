@@ -9,19 +9,19 @@ repos:
       - id: check-ast # Validates Python abstract syntax trees
 
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.11.29
+    rev: 0.12.5
     hooks:
       - id: uv-lock
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.21
+    rev: v0.16.3
     hooks:
       - id: ruff # Lints Python code (replaces Flake8, Autoflake)
         args: [--fix] # Automatically fix fixable lint errors
       - id: ruff-format # Formats Python code (replaces Black)
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v2.2.0
+    rev: v2.3.1
     hooks:
       - id: mypy # Validates static type hints
         args: [--python-executable=.venv/bin/python]

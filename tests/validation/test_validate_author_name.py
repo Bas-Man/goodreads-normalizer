@@ -1,17 +1,18 @@
 import pytest
 
+from goodreads_normalizer.exceptions.base import NarratorAsAuthorError
 from goodreads_normalizer.validation.author import validate_author_name
 
 TEST_AUTHOR_NAME = [
     "Jim Butcher",
     "Sean Oswald",
-    "My Self",  # Used to confirm that a name that is not in either KNOWN_AUTHORS or KNOWN_NARRATORS is valid
+    "My Self",  # Unknown name should be valid; No assumptions made about the name
 ]
 
 TEST_INVALID_AUTHORS = ["en-IN-PrabhatNeural"]
 
 TEST_AUTHOR_NARRATORS = [
-    "Travis Baltree",  # Know as Narrator. He also has written some books, meaning he can appear in the KNOWN_NARRATOR list
+    "Travis Baldree",  # Known as Narrator and Author. In both lists
 ]
 
 
@@ -22,8 +23,12 @@ def test_validate_author_name(input_name: str) -> None:
 
 @pytest.mark.parametrize("input_author", TEST_INVALID_AUTHORS)
 def test_invalid_authors(input_author: str):
-    with pytest.raises(ValueError):
+    with pytest.raises(NarratorAsAuthorError) as exc_info:
         validate_author_name(input_author)
+    error = exc_info.value
+
+    assert isinstance(error, NarratorAsAuthorError)
+    assert error.contributor == input_author
 
 
 @pytest.mark.parametrize("input_author", TEST_AUTHOR_NARRATORS)
