@@ -28,7 +28,7 @@ def test_creates_book_from_goodreads_row():
     assert len(book.narrators) == 2
     assert book.narrators[0].name == "Eric Jason Martin"
     assert book.narrators[1].name == "Jeff Harding"
-    assert book.isbn is None
+    assert book.isbn10 is None
     assert book.isbn13 is None
     assert book.rating == 4
     assert book.publisher == "HarperAudio"

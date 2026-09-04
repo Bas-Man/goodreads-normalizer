@@ -147,7 +147,7 @@ def export_to_stream(
             "Title": book.original_title,
             "Author": author_name,
             "Additional Authors": additional_author_names,
-            "ISBN": book.isbn,
+            "ISBN": book.isbn10,
             "ISBN13": book.isbn13,
             "My Rating": book.rating,
             "Publisher": book.publisher,

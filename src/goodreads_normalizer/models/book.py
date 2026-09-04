@@ -9,6 +9,7 @@ from typing import Self
 
 from pydantic import BaseModel, Field, computed_field, field_validator, model_validator
 from pydantic_core.core_schema import ValidationInfo
+from stdnum import isbn
 
 from goodreads_normalizer.models.author import Author
 from goodreads_normalizer.models.book_title import BookTitleData, Series
@@ -42,7 +43,7 @@ class Book(BaseModel):
         title_data (BookTitleData):
         authors (list[Author]):
         narrators (list[Narrator]):
-        isbn (str|None):
+        isbn10 (str|None):
         isbn13 (str|None):
         rating (int):
         publisher (str):
@@ -66,7 +67,7 @@ class Book(BaseModel):
     title_data: BookTitleData
     authors: list[Author] = Field(default_factory=list)
     narrators: list[Narrator] = Field(default_factory=list)
-    isbn: str | None
+    isbn10: str | None
     isbn13: str | None
     rating: int
     publisher: str
@@ -118,7 +119,7 @@ class Book(BaseModel):
         except ValueError:
             return None
 
-    @field_validator("isbn", "isbn13", mode="before")
+    @field_validator("isbn10", "isbn13", mode="before")
     @classmethod
     def _parse_isbn(cls, value: str) -> str | None:
         value = value.strip()
@@ -174,7 +175,7 @@ class Book(BaseModel):
         additional_authors: str | None = None,
         authors: list[Author] | list[str] | None = None,
         narrators: list[Narrator] | list[str] | None = None,
-        isbn: str | None = None,
+        isbn10: str | None = None,
         isbn13: str | None = None,
         rating: int = 0,
         publisher: str = "",
@@ -233,7 +234,7 @@ class Book(BaseModel):
         data: dict = {
             "book_id": book_id,
             "title_data": title,
-            "isbn": isbn or "",
+            "isbn10": isbn10 or "",
             "isbn13": isbn13 or "",
             "rating": rating,
             "publisher": publisher,
@@ -337,3 +338,56 @@ class Book(BaseModel):
         This is a standalone book. Does not belong to any series
         """
         return self.title_data.is_stand_alone
+
+    @computed_field()
+    @property
+    def isbn_10(self) -> str:
+        """
+
+        Returns: Unformatted ISBN 10 record
+        """
+        if self.isbn10:
+            return self.isbn10
+        else:
+            return ""
+
+    @computed_field()
+    @property
+    def isbn_10_formatted(self) -> str:
+        """
+
+        Returns: formatted ISBN 10 record
+        """
+        if self.isbn10:
+            return isbn.format(self.isbn10)
+        else:
+            return ""
+
+    @computed_field()
+    @property
+    def isbn_13(self) -> str:
+        """
+
+        Returns: Unformatted ISBN 13 record
+        """
+        if self.isbn13:
+            return self.isbn13
+        elif self.isbn10:
+            return isbn.to_isbn13(self.isbn10)
+        else:
+            return ""
+
+    @computed_field()
+    @property
+    def isbn_13_formatted(self) -> str:
+        """
+        Calculates the isbn 13 value if it does not exist and there is a valid isbn 10 value
+
+        Returns: formatted ISBN 13 record
+        """
+        if self.isbn13:
+            return self.isbn13
+        elif self.isbn10:
+            return isbn.format(isbn.to_isbn13(self.isbn10))
+        else:
+            return ""

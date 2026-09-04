@@ -23,7 +23,7 @@ class GoodreadsBookMapper:
             "title_data": row["Title"],
             "authors": authors,
             "narrators": narrators,
-            "isbn": row.get("ISBN", ""),
+            "isbn10": row.get("ISBN", ""),
             "isbn13": row.get("ISBN13", ""),
             "rating": row["My Rating"],
             "publisher": row.get("Publisher", "Unknown"),

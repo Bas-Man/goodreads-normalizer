@@ -25,7 +25,7 @@ def test_parse_books():
     assert books[0].authors[0].pen_name is None
     assert books[0].narrators == []
 
-    assert books[0].isbn == "1234567891"
+    assert books[0].isbn10 == "1234567891"
     assert books[0].isbn13 is None
     assert books[0].rating == 0
     assert books[0].book_id == "226152904"
@@ -36,7 +36,7 @@ def test_parse_books():
     assert books[0].authors[0].name == "David Burke"
     assert books[0].authors[0].last_first_name == "Burke, David"
     assert books[1].rating == 3
-    assert books[1].isbn is None
+    assert books[1].isbn10 is None
     assert books[1].isbn13 == "1234567891234"
     assert books[1].book_id == "226146301"
     assert books[1].publisher == ""
@@ -70,7 +70,7 @@ def test_parse_books2():
     assert books[0].series[0].numbers == ["11"]
     assert books[0].authors[0].name == "Sean Oswald"
     assert books[0].narrators == []
-    assert books[0].isbn is None
+    assert books[0].isbn10 is None
     assert books[0].isbn13 is None
     assert books[0].rating == 4
     assert books[0].publisher == ""
@@ -101,7 +101,7 @@ def test_parse_books2():
         Narrator(name="Daniel Wisniewski"),
         Narrator(name="Rebecca Woods"),
     ]
-    assert books[1].isbn is None
+    assert books[1].isbn10 is None
     assert books[1].isbn13 is None
     assert books[1].rating == 0
     assert books[1].publisher == "Podium Audio"
@@ -130,7 +130,7 @@ def test_parse_books2():
         Narrator(name="Daniel Wisniewski"),
         Narrator(name="Rebecca Woods"),
     ]
-    assert books[2].isbn is None
+    assert books[2].isbn10 is None
     assert books[2].isbn13 is None
     assert books[2].rating == 3
     assert books[2].publisher == "Podium Audio"

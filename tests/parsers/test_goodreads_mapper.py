@@ -83,7 +83,7 @@ def test_maps_isbn():
 
     data = GoodreadsBookMapper.to_book_input(row)
 
-    assert data["isbn"] == row["ISBN"]
+    assert data["isbn10"] == row["ISBN"]
 
 
 def test_maps_isbn13():

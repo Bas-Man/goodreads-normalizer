@@ -51,3 +51,31 @@ class NarratorAsContributorOnNonAudioEditionError(GoodreadsValidationError):
         return (
             f"{self.contributor!r} is not the primary author and is a known narrator."
         )
+
+
+class NoISBNWarning(GoodreadsValidationError):
+    def __init__(self):
+        super().__init__(severity=Severity.WARNING, recommendation="None")
+
+    def __str__(self):
+        return (
+            "Book is lacking a INSB-10 or ISBN-13 identifier. This may not be required."
+        )
+
+
+class NoISBNError(GoodreadsValidationError):
+    def __init__(self):
+        super().__init__(severity=Severity.ERROR, recommendation="None")
+
+    def __str__(self):
+        return "Book is lacking a INSB-10 or ISBN-13 identifier. This is required based of binding."
+
+
+class InvalidISBNError(GoodreadsValidationError):
+    def __init__(self):
+        super().__init__(
+            severity=Severity.ERROR, recommendation="Check book data ISBN and/or ISBN13"
+        )
+
+    def __str__(self):
+        return "THe validation of the ISBN number found failed. This is not a correct ISBN."
