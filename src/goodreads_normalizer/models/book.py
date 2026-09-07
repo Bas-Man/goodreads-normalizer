@@ -10,6 +10,8 @@ from typing import Self
 from pydantic import BaseModel, Field, computed_field, field_validator, model_validator
 from pydantic_core.core_schema import ValidationInfo
 from stdnum import isbn
+from stdnum import isbn as isbn_lib
+from stdnum.exceptions import ValidationError as ISBNValidationError
 
 from goodreads_normalizer.models.author import Author
 from goodreads_normalizer.models.book_title import BookTitleData, Series
@@ -119,13 +121,38 @@ class Book(BaseModel):
         except ValueError:
             return None
 
-    @field_validator("isbn10", "isbn13", mode="before")
+    @model_validator(mode="before")
     @classmethod
-    def _parse_isbn(cls, value: str) -> str | None:
-        value = value.strip()
-        if not value or (value == '=""' or value == '"="""""'):
-            return None
-        return str(value).strip("=")
+    def _parse_and_validate_isbns(cls, data: dict) -> dict:
+        if not isinstance(data, dict):
+            return data
+
+        def clean_isbn(value: str | None) -> str | None:
+            if not value:
+                return None
+            cleaned = str(value).strip().strip('="')
+            return cleaned if cleaned else None
+
+        # todo: Add check for print media to contain an isbn value
+        isbn10 = clean_isbn(data.get("isbn10", None) or data.get("ISBN", None))
+        isbn13 = clean_isbn(data.get("isbn13", None) or data.get("ISBN13", None))
+
+        try:
+            if isbn10:
+                isbn10 = isbn_lib.validate(isbn10)
+            if isbn13:
+                isbn13 = isbn_lib.validate(isbn13)
+            if isbn10 and not isbn13:
+                isbn13 = isbn_lib.to_isbn13(isbn10)
+        except ISBNValidationError as e:
+            raise ValueError(f"Invalid ISBN: {e}") from e
+
+        if isbn13 and isbn_lib.isbn_type(isbn13) != "ISBN13":
+            raise ValueError(f"Expected ISBN13 but got: {isbn13!r}")
+
+        data["isbn10"] = isbn10
+        data["isbn13"] = isbn13
+        return data
 
     @field_validator("book_shelves", "book_shelves_with_positions", mode="before")
     @classmethod
