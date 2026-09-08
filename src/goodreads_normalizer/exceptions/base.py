@@ -55,7 +55,7 @@ class NarratorAsContributorOnNonAudioEditionError(GoodreadsValidationError):
 
 class NoISBNWarning(GoodreadsValidationError):
     def __init__(self):
-        super().__init__(severity=Severity.WARNING, recommendation="None")
+        super().__init__(severity=Severity.WARNING, recommendation=None)
 
     def __str__(self):
         return (
@@ -78,4 +78,4 @@ class InvalidISBNError(GoodreadsValidationError):
         )
 
     def __str__(self):
-        return "THe validation of the ISBN number found failed. This is not a correct ISBN."
+        return "The validation of the ISBN number found failed. This is not a correct ISBN."
