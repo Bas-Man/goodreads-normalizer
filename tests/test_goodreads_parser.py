@@ -26,7 +26,9 @@ def test_parse_books():
     assert books[0].narrators == []
 
     assert books[0].isbn10 == "1970567031"
+    assert books[0].isbn_10_formatted == "1-970567-03-1"
     assert books[0].isbn13 == "9781970567038"
+    assert books[0].isbn_13_formatted == "978-1-970567-03-8"
     assert books[0].rating == 0
     assert books[0].book_id == "226152904"
     assert books[0].publisher == "Podium Audio"

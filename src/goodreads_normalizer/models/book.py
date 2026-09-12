@@ -11,8 +11,10 @@ from pydantic import BaseModel, Field, computed_field, field_validator, model_va
 from pydantic_core.core_schema import ValidationInfo
 from stdnum import isbn
 from stdnum import isbn as isbn_lib
+from stdnum.exceptions import InvalidChecksum as InvalidISBNCheckSum
 from stdnum.exceptions import ValidationError as ISBNValidationError
 
+from goodreads_normalizer.exceptions.base import InvalidISBNError
 from goodreads_normalizer.models.author import Author
 from goodreads_normalizer.models.book_title import BookTitleData, Series
 from goodreads_normalizer.models.narrator import Narrator
@@ -144,6 +146,8 @@ class Book(BaseModel):
                 isbn13 = isbn_lib.validate(isbn13)
             if isbn10 and not isbn13:
                 isbn13 = isbn_lib.to_isbn13(isbn10)
+        except InvalidISBNCheckSum:
+            raise InvalidISBNError()
         except ISBNValidationError as e:
             raise ValueError(f"Invalid ISBN: {e}") from e
 
@@ -382,7 +386,6 @@ class Book(BaseModel):
     @property
     def isbn_10_formatted(self) -> str:
         """
-
         Returns: formatted ISBN 10 record
         """
         if self.isbn10:
@@ -394,7 +397,6 @@ class Book(BaseModel):
     @property
     def isbn_13(self) -> str:
         """
-
         Returns: Unformatted ISBN 13 record
         """
         if self.isbn13:
@@ -413,7 +415,7 @@ class Book(BaseModel):
         Returns: formatted ISBN 13 record
         """
         if self.isbn13:
-            return self.isbn13
+            return isbn.format(self.isbn13)
         elif self.isbn10:
             return isbn.format(isbn.to_isbn13(self.isbn10))
         else:
