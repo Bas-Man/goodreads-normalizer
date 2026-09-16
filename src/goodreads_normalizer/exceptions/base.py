@@ -78,4 +78,4 @@ class InvalidISBNError(GoodreadsValidationError):
         )
 
     def __str__(self):
-        return "The validation of the ISBN number found failed. This is not a correct ISBN."
+        return "Check sum for this ISBN failed."
