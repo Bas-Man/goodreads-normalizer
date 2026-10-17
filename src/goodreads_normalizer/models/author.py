@@ -19,8 +19,12 @@ class Author(BaseModel):
     This object stores the information about an author.
     The Author may have a nom de plume.
 
+    Goodreads Data:
+        The way that Goodreads exports its data is not very well organised.
+        A "best effort" has been made to resolve data issues.
+
     Attributes:
-        name (str):
+        name (str): Author's Name
         pen_name (str): Author's Nom de plume
 
     Examples:
