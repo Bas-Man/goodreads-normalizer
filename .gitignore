@@ -13,6 +13,7 @@ wheels/
 great-docs/
 
 # Great Docs versioned-build artifacts
+_freeze
 _great_docs_build/
 .great-docs-build/
 .great-docs-cache/
