@@ -34,17 +34,10 @@ class Book(BaseModel):
     This model stores all row data read from goodreads_export.csv file.
     As part of the book model creation. Validation and normalization is performed.
 
-    BookTitleData:
-
-        original_title (str):
-
-        title (str): Book title only
-
-        series (list[Series]): Series data for current Book.
-
     Attributes:
         book_id (str):
-        title_data (BookTitleData):
+        title_data (goodreads_normalizer.models.book_title.BookTitleData): Structured
+            metadata representing the book's title information.
         authors (list[Author]):
         narrators (list[Narrator]):
         isbn10 (str|None):
@@ -372,51 +365,21 @@ class Book(BaseModel):
 
     @computed_field()
     @property
-    def isbn_10(self) -> str:
+    def isbn(self) -> str:
         """
-
-        Returns: Unformatted ISBN 10 record
-        """
-        if self.isbn10:
-            return self.isbn10
-        else:
-            return ""
-
-    @computed_field()
-    @property
-    def isbn_10_formatted(self) -> str:
-        """
-        Returns: formatted ISBN 10 record
-        """
-        if self.isbn10:
-            return isbn.format(self.isbn10)
-        else:
-            return ""
-
-    @computed_field()
-    @property
-    def isbn_13(self) -> str:
-        """
-        Returns: Unformatted ISBN 13 record
+        Gives the ISBN of the book
         """
         if self.isbn13:
             return self.isbn13
         elif self.isbn10:
-            return isbn.to_isbn13(self.isbn10)
-        else:
-            return ""
+            return self.isbn10
+        return ""
 
     @computed_field()
     @property
-    def isbn_13_formatted(self) -> str:
-        """
-        Calculates the isbn 13 value if it does not exist and there is a valid isbn 10 value
-
-        Returns: formatted ISBN 13 record
-        """
-        if self.isbn13:
-            return isbn.format(self.isbn13)
-        elif self.isbn10:
-            return isbn.format(isbn.to_isbn13(self.isbn10))
+    def fmt_isbn(self) -> str:
+        isbn_number = self.isbn13 or self.isbn10
+        if isbn_number:
+            return isbn.format(isbn_number)
         else:
             return ""
