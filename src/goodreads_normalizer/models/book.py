@@ -36,8 +36,9 @@ class Book(BaseModel):
 
     Attributes:
         book_id (str):
-        title_data (goodreads_normalizer.models.book_title.BookTitleData): Structured
-            metadata representing the book's title information.
+        title_data (BookTitleData):
+            Structured metadata representing the book's title information.
+            See [](`~goodreads_normalizer.models.book_title.BookTitleData`).
         authors (list[Author]):
         narrators (list[Narrator]):
         isbn10 (str|None):
@@ -378,6 +379,9 @@ class Book(BaseModel):
     @computed_field()
     @property
     def fmt_isbn(self) -> str:
+        """
+        Returns: Either a formatted isbn-13 or an empty string.
+        """
         isbn_number = self.isbn13 or self.isbn10
         if isbn_number:
             return isbn.format(isbn_number)

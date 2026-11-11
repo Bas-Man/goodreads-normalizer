@@ -5,10 +5,12 @@ class Series(BaseModel):
     """
     This model stores information about the book series the book belongs to.
     It also stores the books series numbers
-    Note: numbers is a list[str]
-    ["1"] Book number 1 of series
-    ["1", "2"] Books ond and two of series
-    ["3", "5"] Books 3, 4 and 5 of series
+
+    Note:
+    numbers is a list[str]
+        - ["1"] Book number 1 of series
+        - ["1", "2"] Books ond and two of series
+        - ["3", "5"] Books 3, 4 and 5 of series
     """
 
     name: str
@@ -21,7 +23,9 @@ class BookTitleData(BaseModel):
 
     Attributes:
         original_title (str): raw title
+
         title (str): parsed title
+
         series (Series): Series Model
     """
 
@@ -33,8 +37,7 @@ class BookTitleData(BaseModel):
     @property
     def is_a_crossover(self) -> bool:
         """
-        Check if the book belongs to more than one series. E.G: Will Trent and Jack
-        Reacher
+        Check if the book belongs to more than one series. E.G: Will Trent and Jack Reacher
         """
         return len(self.series) > 1
 
@@ -55,6 +58,6 @@ class BookTitleData(BaseModel):
     @property
     def is_collection(self) -> bool:
         """
-        This indicates if the book is a collection or more that one book in a series
+        This indicates if the book is a collection or more than one book in a series
         """
         return len(self.series) == 1 and len(self.series[0].numbers) > 1
